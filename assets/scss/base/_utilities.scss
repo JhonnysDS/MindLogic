@@ -1,0 +1,87 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as mix;
+@use 'sass:map';
+
+// ... (Existing spacing/utility classes)
+
+// ==========================================================================
+// EFFECTS & ANIMATIONS
+// ==========================================================================
+
+// Glassmorphism
+.glass-clean {
+  @include mix.glassmorphism('light');
+}
+
+.glass-cyber {
+  @include mix.glassmorphism('dark');
+}
+
+// Neon Glow
+.neon-glow {
+  @include mix.neon-glow(v.$primary);
+
+  &:hover {
+    @include mix.neon-glow(v.$primary-light);
+  }
+}
+
+// Animations
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes pulse-slow {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite linear;
+}
+
+// Backgrounds
+.bg-deep-space {
+  background-color: v.$deep-space !important;
+}
+
+.bg-slate-50 {
+  background-color: map.get(map.get(v.$colors, 'neutral'), 'light') !important;
+}

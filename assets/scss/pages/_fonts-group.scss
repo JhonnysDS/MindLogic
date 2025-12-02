@@ -1,0 +1,65 @@
+// ==========================================================================
+// FONTS GROUP - Demo Classes for Typography Showcase
+// ==========================================================================
+
+@use 'sass:map';
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as mix;
+
+// ==========================================================================
+// Demo Heading Classes
+// Estas clases replican los estilos de h1-h6 para mostrar ejemplos
+// sin afectar la semántica HTML de la página
+// ==========================================================================
+
+.demo-h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: map.get(v.$font-sizes, '2xl');
+  font-weight: map.get(v.$font-weights, 'bold');
+  margin-bottom: map.get(v.$spacers, 3);
+  line-height: 1.2;
+  
+  @include mix.respond-to-min('md') {
+    font-size: map.get(v.$font-sizes, '3xl');
+  }
+}
+
+.demo-h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: map.get(v.$font-sizes, '3xl');
+  font-weight: map.get(v.$font-weights, 'bold');
+  margin-bottom: map.get(v.$spacers, 3);
+  line-height: 1.2;
+}
+
+.demo-h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: map.get(v.$font-sizes, '2xl');
+  font-weight: map.get(v.$font-weights, 'semibold');
+  margin-bottom: map.get(v.$spacers, 3);
+  line-height: 1.2;
+}
+
+.demo-h4 {
+  font-family: 'Poppins', sans-serif;
+  font-size: map.get(v.$font-sizes, 'xl');
+  font-weight: map.get(v.$font-weights, 'semibold');
+  margin-bottom: map.get(v.$spacers, 3);
+  line-height: 1.2;
+}
+
+.demo-h5 {
+  font-family: 'Poppins', sans-serif;
+  font-size: map.get(v.$font-sizes, 'lg');
+  font-weight: map.get(v.$font-weights, 'medium');
+  margin-bottom: map.get(v.$spacers, 3);
+  line-height: 1.2;
+}
+
+.demo-h6 {
+  font-family: 'Poppins', sans-serif;
+  font-size: map.get(v.$font-sizes, 'base');
+  font-weight: map.get(v.$font-weights, 'medium');
+  margin-bottom: map.get(v.$spacers, 3);
+  line-height: 1.2;
+}

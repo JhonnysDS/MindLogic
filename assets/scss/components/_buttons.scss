@@ -1,0 +1,267 @@
+// =========================================================
+// BUTTONS TECH STYLE - GEOMETRIC, SMOOTH, TECH EFFECT
+// =========================================================
+
+@use '../abstracts/mixins' as mix;
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 2rem;
+  border: 2px solid var(--color-primary);
+  border-radius: 14px;
+  background-color: var(--color-primary);
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  overflow: hidden;
+  transition: all 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease, background-color 0.4s ease;
+
+  &:hover {
+    box-shadow: 0 0 12px var(--color-primary);
+    transform: translateY(-2px);
+    color: #ffffff !important;
+  }
+
+  &:active {
+    transform: translateY(0);
+    color: #ffffff !important;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    border: 2px solid transparent;
+    background: linear-gradient(120deg, var(--color-primary), var(--color-accent));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: destination-out;
+    padding: 2px;
+    transition: all 0.4s ease;
+    opacity: 0;
+  }
+
+  &:hover::before {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    color: #ffffff !important;
+  }
+
+  @include mix.respond-to-max('sm') {
+    padding: 10px;
+    font-size: 0.7rem;
+  }
+}
+
+// =========================================================
+// VARIANTS
+// =========================================================
+
+.btn-primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+
+  &:hover {
+    background-color: var(--color-primary-light);
+    box-shadow: 0 0 12px var(--color-primary);
+  }
+}
+
+.btn-secondary {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+
+  &:hover {
+    background-color: var(--color-primary);
+    box-shadow: 0 0 12px var(--color-primary);
+  }
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  transition: all 0.4s ease, color 0.4s ease;
+
+  &:hover {
+    background-color: var(--color-primary);
+    color: #ffffff !important;
+    box-shadow: 0 0 12px var(--color-primary);
+  }
+
+  &:active {
+    background-color: var(--color-primary);
+    color: #ffffff !important;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    color: var(--color-primary);
+  }
+}
+
+.btn-ghost {
+  background-color: var(--color-background);
+  border-color: transparent;
+
+  &:hover {
+    background-color: rgba(56, 189, 248, 0.1);
+    box-shadow: none;
+  }
+}
+
+.btn-icon {
+  width: 3rem;
+  height: 3rem;
+  min-width: 3rem;
+  padding: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background-color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  transition: all 0.4s ease;
+
+  &:hover {
+    background-color: var(--color-primary-light);
+    box-shadow: 0 0 12px var(--color-primary);
+  }
+
+  svg, i {
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+}
+
+.btn-social {
+  @extend .btn-icon;
+  border: 2px solid transparent;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  &.btn-twitter {
+    background-color: #1DA1F2;
+
+    &:hover {
+      background-color: #1A91DA;
+    }
+  }
+
+  &.btn-facebook {
+    background-color: #4267B2;
+
+    &:hover {
+      background-color: #365899;
+    }
+  }
+
+  &.btn-linkedin {
+    background-color: #0077B5;
+
+    &:hover {
+      background-color: #006097;
+    }
+  }
+
+  &.btn-instagram {
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  &.btn-youtube {
+    background-color: #FF0000;
+
+    &:hover {
+      background-color: #cc0000;
+    }
+  }
+
+  &.btn-github {
+    background-color: #333333;
+
+    &:hover {
+      background-color: #1a1a1a;
+    }
+  }
+}
+
+.btn-get-quotes {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 2rem;
+  border: 2px solid var(--color-primary);
+  border-radius: 14px;
+  background-color:#111827;
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  overflow: hidden;
+  transition: all 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 0 12px var(--color-primary);
+    transform: translateY(-2px);
+    color: #ffffff !important;
+  }
+
+  &:active {
+    transform: translateY(0);
+    color: #ffffff !important;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    border: 2px solid transparent;
+    background: linear-gradient(120deg, var(--color-primary), var(--color-accent));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: destination-out;
+    padding: 2px;
+    transition: all 0.4s ease;
+    opacity: 0;
+  }
+
+  &:hover::before {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    color: #ffffff !important;
+  }
+}

@@ -1,0 +1,129 @@
+@use 'sass:map';
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as mix;
+
+/* ==========================================================================
+   TYPOGRAPHY
+   ========================================================================== */
+
+// Import Google Fonts (You should add the <link> in HTML, but here is the CSS reference)
+// Space Grotesk (Display) & Inter (Body)
+
+body {
+  font-family: v.$font-family-sans;
+  font-weight: map.get(v.$font-weights, 'regular');
+  font-size: map.get(v.$font-sizes, 'base');
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+}
+
+/* Headings - Space Grotesk */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-display {
+  font-family: v.$font-family-heading;
+  color: var(--text-color);
+  margin-bottom: map.get(v.$spacers, 3);
+  line-height: 1.2;
+}
+
+h1 {
+  font-weight: map.get(v.$font-weights, 'bold');
+  font-size: map.get(v.$font-sizes, '4xl');
+
+  @include mix.respond-to-min('md') {
+    font-size: map.get(v.$font-sizes, '5xl');
+  }
+}
+
+h2 {
+  font-weight: map.get(v.$font-weights, 'bold');
+  font-size: map.get(v.$font-sizes, '3xl');
+
+  @include mix.respond-to-min('md') {
+    font-size: map.get(v.$font-sizes, '4xl');
+  }
+}
+
+h3 {
+  font-weight: map.get(v.$font-weights, 'bold'); // Or medium depending on preference
+  font-size: map.get(v.$font-sizes, '2xl');
+}
+
+h4 {
+  font-weight: map.get(v.$font-weights, 'medium');
+  font-size: map.get(v.$font-sizes, 'xl');
+}
+
+h5 {
+  font-weight: map.get(v.$font-weights, 'medium');
+  font-size: map.get(v.$font-sizes, 'lg');
+}
+
+h6 {
+  font-weight: map.get(v.$font-weights, 'medium');
+  font-size: map.get(v.$font-sizes, 'base');
+}
+
+/* Body Text - Inter */
+p {
+  font-family: v.$font-family-sans;
+  margin-bottom: map.get(v.$spacers, 3);
+}
+
+.font-sans {
+  font-family: v.$font-family-sans !important;
+}
+
+.font-display {
+  font-family: v.$font-family-heading !important;
+}
+
+/* Links */
+a {
+  color: v.$primary;
+  text-decoration: none;
+  transition: v.$transition-base;
+
+  &:hover {
+    color: v.$primary-light;
+  }
+}
+
+/* Text Utilities */
+.text-neon-blue {
+  color: v.$neon-blue !important;
+}
+
+.text-neon-purple {
+  color: v.$neon-purple !important;
+}
+
+.text-white {
+  color: v.$white !important;
+}
+
+.text-gradient {
+  @include mix.text-gradient;
+}
+
+.font-light {
+  font-weight: map.get(v.$font-weights, 'light') !important;
+}
+
+.font-regular {
+  font-weight: map.get(v.$font-weights, 'regular') !important;
+}
+
+.font-medium {
+  font-weight: map.get(v.$font-weights, 'medium') !important;
+}
+
+.font-bold {
+  font-weight: map.get(v.$font-weights, 'bold') !important;
+}

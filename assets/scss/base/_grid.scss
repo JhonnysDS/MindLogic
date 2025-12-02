@@ -1,0 +1,351 @@
+// ==========================================================================
+// GRID SYSTEM - CSS Grid Layout Utilities (Cross-browser with Mixins)
+// ==========================================================================
+
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as mix;
+@use 'sass:map';
+
+// ==========================================================================
+// Display Grid Utilities (using mixins)
+// ==========================================================================
+
+.d-grid { 
+  @include mix.grid-display();
+  gap: map.get(v.$spacers, 3);
+}
+
+// Responsive grid display utilities
+@each $breakpoint, $value in v.$breakpoints {
+  @include mix.respond-to-min($breakpoint) {
+    .d-#{$breakpoint}-grid { 
+      @include mix.grid-display();
+      gap: map.get(v.$spacers, 3);
+    }
+  }
+}
+
+// ==========================================================================
+// Base Grid Container (using mixins)
+// ==========================================================================
+
+.grid {
+  @include mix.grid(1, v.$grid-gap-base);
+  
+  // Grid gap variations using spacers
+  @each $key, $value in v.$spacers {
+    &.gap-#{$key} { gap: $value; }
+    &.gap-x-#{$key} { column-gap: $value; }
+    &.gap-y-#{$key} { row-gap: $value; }
+  }
+}
+
+// ==========================================================================
+// Grid Columns - Explicit Grid (cross-browser)
+// ==========================================================================
+
+// Fixed column grids (1-12 columns) using mixins
+@for $i from 1 through 12 {
+  .grid-cols-#{$i} {
+    @include mix.grid($i, v.$grid-gap-base);
+  }
+}
+
+// Auto-fit grids with minimum column sizes (using mixins)
+.grid-auto-fit {
+  @include mix.grid-auto-fit(300px);
+  
+  // Different minimum sizes
+  &.min-200 { @include mix.grid-auto-fit(200px); }
+  &.min-250 { @include mix.grid-auto-fit(250px); }
+  &.min-300 { @include mix.grid-auto-fit(300px); }
+  &.min-350 { @include mix.grid-auto-fit(350px); }
+  &.min-400 { @include mix.grid-auto-fit(400px); }
+}
+
+// Auto-fill grids (using mixins)
+.grid-auto-fill {
+  @include mix.grid-auto-fill(300px);
+  
+  // Different minimum sizes
+  &.min-200 { @include mix.grid-auto-fill(200px); }
+  &.min-250 { @include mix.grid-auto-fill(250px); }
+  &.min-300 { @include mix.grid-auto-fill(300px); }
+  &.min-350 { @include mix.grid-auto-fill(350px); }
+  &.min-400 { @include mix.grid-auto-fill(400px); }
+}
+
+// ==========================================================================
+// Grid Rows (cross-browser)
+// ==========================================================================
+
+// Fixed row grids
+@for $i from 1 through 6 {
+  .grid-rows-#{$i} {
+    -ms-grid-rows: repeat(#{$i}, 1fr);
+    grid-template-rows: repeat(#{$i}, 1fr);
+  }
+}
+
+// Auto rows
+.grid-rows-auto {
+  -ms-grid-rows: repeat(auto-fit, 1fr);
+  grid-template-rows: repeat(auto-fit, 1fr);
+}
+
+// ==========================================================================
+// Grid Item Spanning (cross-browser)
+// ==========================================================================
+
+// Column spanning
+@for $i from 1 through 12 {
+  .col-span-#{$i} {
+    -ms-grid-column-span: #{$i};
+    grid-column: span #{$i} / span #{$i};
+  }
+}
+
+.col-span-full {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 12;
+  grid-column: 1 / -1;
+}
+
+// Row spanning
+@for $i from 1 through 6 {
+  .row-span-#{$i} {
+    -ms-grid-row-span: #{$i};
+    grid-row: span #{$i} / span #{$i};
+  }
+}
+
+.row-span-full {
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 6;
+  grid-row: 1 / -1;
+}
+
+// ==========================================================================
+// Grid Item Positioning (cross-browser)
+// ==========================================================================
+
+// Column start/end
+@for $i from 1 through 13 {
+  .col-start-#{$i} {
+    -ms-grid-column: #{$i};
+    grid-column-start: #{$i};
+    grid-column: #{$i} / span 1;
+  }
+  .col-end-#{$i} {
+    grid-column-end: #{$i};
+  }
+}
+
+// Row start/end
+@for $i from 1 through 7 {
+  .row-start-#{$i} {
+    -ms-grid-row: #{$i};
+    grid-row-start: #{$i};
+    grid-row: #{$i} / span 1;
+  }
+  .row-end-#{$i} {
+    grid-row-end: #{$i};
+  }
+}
+
+// ==========================================================================
+// Grid Alignment (using mixins - renamed to avoid conflicts with flex)
+// ==========================================================================
+
+// Justify items (horizontal alignment of grid items)
+.grid-justify-items-start { @include mix.grid-justify-items(start); }
+.grid-justify-items-end { @include mix.grid-justify-items(end); }
+.grid-justify-items-center { @include mix.grid-justify-items(center); }
+.grid-justify-items-stretch { @include mix.grid-justify-items(stretch); }
+
+// Align items (vertical alignment of grid items) - renamed from align-items-*
+.grid-align-items-start { @include mix.grid-align-items(start); }
+.grid-align-items-end { @include mix.grid-align-items(end); }
+.grid-align-items-center { @include mix.grid-align-items(center); }
+.grid-align-items-stretch { @include mix.grid-align-items(stretch); }
+
+// Justify content (horizontal alignment of grid itself)
+.grid-justify-content-start { justify-content: start; }
+.grid-justify-content-end { justify-content: end; }
+.grid-justify-content-center { justify-content: center; }
+.grid-justify-content-stretch { justify-content: stretch; }
+.grid-justify-content-around { justify-content: space-around; }
+.grid-justify-content-between { justify-content: space-between; }
+.grid-justify-content-evenly { justify-content: space-evenly; }
+
+// Align content (vertical alignment of grid itself)
+.grid-align-content-start { align-content: start; }
+.grid-align-content-end { align-content: end; }
+.grid-align-content-center { align-content: center; }
+.grid-align-content-stretch { align-content: stretch; }
+.grid-align-content-around { align-content: space-around; }
+.grid-align-content-between { align-content: space-between; }
+.grid-align-content-evenly { align-content: space-evenly; }
+
+// Place items (shorthand for justify-items + align-items) - using mixins
+.grid-place-items-start { @include mix.place-items(start); }
+.grid-place-items-end { @include mix.place-items(end); }
+.grid-place-items-center { @include mix.place-items(center); }
+.grid-place-items-stretch { @include mix.place-items(stretch); }
+
+// ==========================================================================
+// Responsive Grid Classes (using mixins and cross-browser)
+// ==========================================================================
+
+// Small screens and up
+@media (min-width: map.get(v.$breakpoints, 'sm')) {
+  @for $i from 1 through 12 {
+    .sm\:grid-cols-#{$i} {
+      @include mix.grid($i, v.$grid-gap-base);
+    }
+  }
+  
+  .sm\:grid-auto-fit {
+    @include mix.grid-auto-fit(300px);
+    
+    &.min-200 { @include mix.grid-auto-fit(200px); }
+    &.min-250 { @include mix.grid-auto-fit(250px); }
+    &.min-300 { @include mix.grid-auto-fit(300px); }
+    &.min-350 { @include mix.grid-auto-fit(350px); }
+  }
+  
+  @for $i from 1 through 12 {
+    .sm\:col-span-#{$i} {
+      -ms-grid-column-span: #{$i};
+      grid-column: span #{$i} / span #{$i};
+    }
+  }
+}
+
+// Medium screens and up
+@media (min-width: map.get(v.$breakpoints, 'md')) {
+  @for $i from 1 through 12 {
+    .md\:grid-cols-#{$i} {
+      @include mix.grid($i, v.$grid-gap-base);
+    }
+  }
+  
+  .md\:grid-auto-fit {
+    @include mix.grid-auto-fit(300px);
+    
+    &.min-200 { @include mix.grid-auto-fit(200px); }
+    &.min-250 { @include mix.grid-auto-fit(250px); }
+    &.min-300 { @include mix.grid-auto-fit(300px); }
+    &.min-350 { @include mix.grid-auto-fit(350px); }
+  }
+  
+  @for $i from 1 through 12 {
+    .md\:col-span-#{$i} {
+      -ms-grid-column-span: #{$i};
+      grid-column: span #{$i} / span #{$i};
+    }
+  }
+}
+
+// Large screens and up
+@media (min-width: map.get(v.$breakpoints, 'lg')) {
+  @for $i from 1 through 12 {
+    .lg\:grid-cols-#{$i} {
+      @include mix.grid($i, v.$grid-gap-base);
+    }
+  }
+  
+  .lg\:grid-auto-fit {
+    @include mix.grid-auto-fit(300px);
+    
+    &.min-200 { @include mix.grid-auto-fit(200px); }
+    &.min-250 { @include mix.grid-auto-fit(250px); }
+    &.min-300 { @include mix.grid-auto-fit(300px); }
+    &.min-350 { @include mix.grid-auto-fit(350px); }
+  }
+  
+  @for $i from 1 through 12 {
+    .lg\:col-span-#{$i} {
+      -ms-grid-column-span: #{$i};
+      grid-column: span #{$i} / span #{$i};
+    }
+  }
+}
+
+// Extra large screens and up
+@media (min-width: map.get(v.$breakpoints, 'xl')) {
+  @for $i from 1 through 12 {
+    .xl\:grid-cols-#{$i} {
+      @include mix.grid($i, v.$grid-gap-base);
+    }
+  }
+  
+  .xl\:grid-auto-fit {
+    @include mix.grid-auto-fit(300px);
+    
+    &.min-200 { @include mix.grid-auto-fit(200px); }
+    &.min-250 { @include mix.grid-auto-fit(250px); }
+    &.min-300 { @include mix.grid-auto-fit(300px); }
+    &.min-350 { @include mix.grid-auto-fit(350px); }
+  }
+  
+  @for $i from 1 through 12 {
+    .xl\:col-span-#{$i} {
+      -ms-grid-column-span: #{$i};
+      grid-column: span #{$i} / span #{$i};
+    }
+  }
+}
+
+// ==========================================================================
+// Grid Utilities (cross-browser)
+// ==========================================================================
+
+// Auto-sizing grid items
+.grid-item-auto {
+  -ms-grid-column: auto;
+  -ms-grid-row: auto;
+  grid-column: auto;
+  grid-row: auto;
+}
+
+// Aspect ratio helpers for grid items
+.grid-item-square {
+  aspect-ratio: 1 / 1;
+}
+
+.grid-item-landscape {
+  aspect-ratio: 16 / 9;
+}
+
+.grid-item-portrait {
+  aspect-ratio: 3 / 4;
+}
+
+// Grid debugging
+.grid-debug {
+  .grid {
+    border: 2px dashed red;
+    background: rgba(255, 0, 0, 0.05);
+  }
+  
+  [class*="col-span"],
+  [class*="row-span"],
+  .grid > * {
+    border: 1px dashed blue;
+    background: rgba(0, 0, 255, 0.05);
+    position: relative;
+    
+    &::after {
+      content: attr(class);
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      font-size: 10px;
+      padding: 2px 4px;
+      z-index: 1000;
+    }
+  }
+}

@@ -1,0 +1,151 @@
+// ==========================================================================
+// VARIABLES
+// ==========================================================================
+
+@use 'sass:map';
+
+// Colors
+// -------------------------
+$colors: (
+  'primary': ('base': #00f3ff, // Neon Blue
+    'light': #4df6ff, // Lighter Neon Blue
+    'dark': #00c2cc, // Darker Neon Blue
+    'gradient': linear-gradient(135deg, #00f3ff 0%, #0088cc 100%)),
+  'secondary': ('base': #bd00ff, // Neon Purple
+    'light': #d14dff, // Lighter Neon Purple
+    'dark': #9700cc // Darker Neon Purple
+  ),
+  'neutral': ('light': #f8fafc, // Slate 50 (Light Mode BG)
+    'base': #0f172a, // Slate 900 (Light Mode Text)
+    'dark': #020617, // Deep Space (Dark Mode BG)
+    'white': #ffffff // Dark Mode Text
+  ),
+  'tech': ('neon-blue': #00f3ff,
+    'neon-purple': #bd00ff,
+    'deep-space': #020617)
+);
+
+// Direct color variables
+$primary: map.get(map.get($colors, 'primary'), 'base');
+$primary-light: map.get(map.get($colors, 'primary'), 'light');
+$primary-dark: map.get(map.get($colors, 'primary'), 'dark');
+$primary-gradient: map.get(map.get($colors, 'primary'), 'gradient');
+
+$secondary: map.get(map.get($colors, 'secondary'), 'base');
+$secondary-light: map.get(map.get($colors, 'secondary'), 'light');
+$secondary-dark: map.get(map.get($colors, 'secondary'), 'dark');
+
+$white: #ffffff;
+$black: #000000;
+
+// Surface Colors
+$bg-light: map.get(map.get($colors, 'neutral'), 'light');
+$text-light: map.get(map.get($colors, 'neutral'), 'base');
+
+$bg-dark: map.get(map.get($colors, 'neutral'), 'dark');
+$text-dark: map.get(map.get($colors, 'neutral'), 'white');
+
+$neon-blue: map.get(map.get($colors, 'tech'), 'neon-blue');
+$neon-purple: map.get(map.get($colors, 'tech'), 'neon-purple');
+$deep-space: map.get(map.get($colors, 'tech'), 'deep-space');
+
+// Breakpoints
+$breakpoints: (
+  'xs': 0,
+  'sm': 576px,
+  'md': 1024px,
+  'lg': 1280px,
+  'xl': 1440px,
+  'xxl': 1600px
+);
+
+// Spacing
+$spacers: (
+  0: 0,
+  1: 0.25rem,
+  2: 0.5rem,
+  3: 1rem,
+  4: 1.5rem,
+  5: 3rem,
+  6: 4rem,
+  8: 6rem,
+  10: 10rem
+);
+
+// Typography
+// -------------------------
+$font-family-sans: 'Inter', sans-serif;
+$font-family-heading: 'Space Grotesk', sans-serif;
+
+// Font sizes
+$font-sizes: (
+  'xs': 0.75rem,
+  'sm': 0.875rem,
+  'base': 1rem,
+  'lg': 1.125rem,
+  'xl': 1.25rem,
+  '2xl': 1.5rem,
+  '3xl': 1.875rem,
+  '4xl': 2.25rem,
+  '5xl': 3rem,
+  '6xl': 3.75rem
+);
+
+// Font weights
+$font-weights: (
+  'light': 300,
+  'regular': 400,
+  'medium': 500,
+  'bold': 700
+);
+
+// Border radius
+$border-radius-sm: 0.25rem;
+$border-radius: 0.5rem;
+$border-radius-lg: 1rem;
+$border-radius-full: 9999px;
+
+// Shadows
+$box-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+$box-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+
+// Transitions
+$transition-base: all 0.3s ease-in-out;
+
+// Z-index
+$z-indices: (
+  'modal': 1000,
+  'dropdown': 900,
+  'navbar': 800,
+  'default': 1,
+  'below': -1
+);
+
+// Grid System Variables
+$grid-gap-base: 1.5rem !default;
+
+// CSS Variables for Theming
+:root {
+  // Light Mode (Default)
+  --bg-color: #{$bg-light};
+  --text-color: #{$text-light};
+  --primary-color: #{$primary};
+  --secondary-color: #{$secondary};
+
+  // Glassmorphism Light
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.05);
+  --glass-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode {
+  // Dark Mode
+  --bg-color: #{$bg-dark};
+  --text-color: #{$text-dark};
+
+  // Glassmorphism Dark
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: none;
+}

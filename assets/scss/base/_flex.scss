@@ -1,0 +1,484 @@
+// ==========================================================================
+// FLEX SYSTEM - Flexbox Layout Utilities (Cross-browser with Mixins)
+// ==========================================================================
+
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as mix;
+@use 'sass:map';
+
+// ==========================================================================
+// Gap Utilities (moved from utilities.scss)
+// ==========================================================================
+
+// Gap utilities for flexbox and grid (standalone)
+@each $key, $value in v.$spacers {
+  .gap-#{$key} { gap: $value !important; }
+  .gap-x-#{$key} { column-gap: $value !important; }
+  .gap-y-#{$key} { row-gap: $value !important; }
+}
+
+// ==========================================================================
+// Display Flex Utilities (using mixins)
+// ==========================================================================
+
+.d-flex { 
+  @include mix.flex(row, flex-start, stretch);
+}
+.d-inline-flex { 
+  @include mix.inline-flex(row, flex-start, stretch);
+}
+
+// Basic flex utilities (using property-specific mixins)
+.flex-row { 
+  @include mix.flex-direction(row);
+}
+.flex-column { 
+  @include mix.flex-direction(column);
+}
+.flex-wrap { 
+  @include mix.flex-wrap(wrap);
+}
+.flex-nowrap { 
+  @include mix.flex-wrap(nowrap);
+}
+.justify-content-start { 
+  @include mix.justify-content(flex-start);
+}
+.justify-content-end { 
+  @include mix.justify-content(flex-end);
+}
+.justify-content-center { 
+  @include mix.justify-content(center);
+}
+.justify-content-between { 
+  @include mix.justify-content(space-between);
+}
+.justify-content-around { 
+  @include mix.justify-content(space-around);
+}
+.align-items-start { 
+  @include mix.align-items(flex-start);
+}
+.align-items-end { 
+  @include mix.align-items(flex-end);
+}
+.align-items-center { 
+  @include mix.align-items(center);
+}
+.align-items-baseline { 
+  @include mix.align-items(baseline);
+}
+.align-items-stretch { 
+  @include mix.align-items(stretch);
+}
+
+// ==========================================================================
+// FLEX CENTERING UTILITIES (using mixins)
+// ==========================================================================
+
+.d-flex-center {
+  @include mix.flex(row, center, center);
+}
+
+.d-flex-between {
+  @include mix.flex(row, space-between, center);
+}
+
+.d-flex-around {
+  @include mix.flex(row, space-around, center);
+}
+
+.d-flex-evenly {
+  @include mix.flex(row, space-evenly, center);
+}
+
+.d-flex-center-column {
+  @include mix.flex(column, center, center);
+}
+
+.d-flex-between-column {
+  @include mix.flex(column, space-between, center);
+}
+
+.d-flex-center-horizontal {
+  @include mix.flex(row, center, stretch);
+}
+
+.d-flex-center-vertical {
+  @include mix.flex(row, flex-start, center);
+}
+
+.d-flex-center-wrap {
+  @include mix.flex(row, center, center, wrap);
+}
+
+.d-flex-baseline {
+  @include mix.flex(row, flex-start, baseline);
+}
+
+.d-flex-baseline-start {
+  @include mix.flex(row, flex-start, baseline);
+}
+
+.d-flex-baseline-center {
+  @include mix.flex(row, center, baseline);
+}
+
+.d-flex-baseline-end {
+  @include mix.flex(row, flex-end, baseline);
+}
+
+.d-flex-baseline-between {
+  @include mix.flex(row, space-between, baseline);
+}
+
+.d-flex-baseline-around {
+  @include mix.flex(row, space-around, baseline);
+}
+
+.d-flex-baseline-evenly {
+  @include mix.flex(row, space-evenly, baseline);
+}
+
+// ==========================================================================
+// COMMON FLEX LAYOUT UTILITIES (using mixins)
+// ==========================================================================
+
+.flex-end-center {
+  @include mix.flex(row, flex-end, center);
+}
+
+.flex-start-center {
+  @include mix.flex(row, flex-start, center);
+}
+
+.flex-column-center {
+  @include mix.flex(column, center, stretch);
+}
+
+.flex-column-center-all {
+  @include mix.flex(column, center, center);
+}
+
+.flex-column-center-end {
+  @include mix.flex(column, center, flex-end);
+}
+
+// Responsive flex display utilities (using mixins)
+@each $breakpoint, $value in v.$breakpoints {
+  @include mix.respond-to-min($breakpoint) {
+    .d-#{$breakpoint}-flex { 
+      @include mix.flex(row, flex-start, stretch);
+    }
+    .d-#{$breakpoint}-inline-flex { 
+      @include mix.inline-flex(row, flex-start, stretch);
+    }
+    
+    .d-#{$breakpoint}-flex-center {
+      @include mix.flex(row, center, center);
+    }
+    
+    .d-#{$breakpoint}-flex-between {
+      @include mix.flex(row, space-between, center);
+    }
+    
+    .d-#{$breakpoint}-flex-center-column {
+      @include mix.flex(column, center, center);
+    }
+  }
+}
+
+// ==========================================================================
+// Base Flex Container (using mixins)
+// ==========================================================================
+
+.flex {
+  @include mix.flex(row, flex-start, stretch);
+  
+  @each $key, $value in v.$spacers {
+    &.gap-#{$key} { gap: $value; }
+    &.gap-x-#{$key} { column-gap: $value; }
+    &.gap-y-#{$key} { row-gap: $value; }
+  }
+}
+
+.inline-flex {
+  @include mix.inline-flex(row, flex-start, stretch);
+  
+  @each $key, $value in v.$spacers {
+    &.gap-#{$key} { gap: $value; }
+    &.gap-x-#{$key} { column-gap: $value; }
+    &.gap-y-#{$key} { row-gap: $value; }
+  }
+}
+
+// ==========================================================================
+// Flex Direction (using mixins)
+// ==========================================================================
+
+.flex-row { 
+  @include mix.flex-direction(row);
+}
+.flex-row-reverse { 
+  @include mix.flex-direction(row-reverse);
+}
+.flex-col { 
+  @include mix.flex-direction(column);
+}
+.flex-col-reverse { 
+  @include mix.flex-direction(column-reverse);
+}
+
+// ==========================================================================
+// Flex Wrap (using mixins)
+// ==========================================================================
+
+.flex-wrap { 
+  @include mix.flex-wrap(wrap);
+}
+.flex-wrap-reverse { 
+  @include mix.flex-wrap(wrap-reverse);
+}
+.flex-nowrap { 
+  @include mix.flex-wrap(nowrap);
+}
+
+// ==========================================================================
+// Flex Basis, Grow, and Shrink (using mixins)
+// ==========================================================================
+
+.flex-auto { 
+  @include mix.flex-property(1 1 auto);
+}
+.flex-initial { 
+  @include mix.flex-property(0 1 auto);
+}
+.flex-none { 
+  @include mix.flex-property(none);
+}
+.flex-1 { 
+  @include mix.flex-property(1 1 0%);
+}
+.flex-2 { 
+  @include mix.flex-property(2 1 0%);
+}
+.flex-3 { 
+  @include mix.flex-property(3 1 0%);
+}
+.flex-4 { 
+  @include mix.flex-property(4 1 0%);
+}
+.flex-5 { 
+  @include mix.flex-property(5 1 0%);
+}
+
+// Flex grow (using mixins)
+.grow { 
+  @include mix.flex-grow(1);
+}
+.grow-0 { 
+  @include mix.flex-grow(0);
+}
+.grow-2 { 
+  @include mix.flex-grow(2);
+}
+.grow-3 { 
+  @include mix.flex-grow(3);
+}
+.grow-4 { 
+  @include mix.flex-grow(4);
+}
+.grow-5 { 
+  @include mix.flex-grow(5);
+}
+
+// Flex shrink (using mixins)
+.shrink { 
+  @include mix.flex-shrink(1);
+}
+.shrink-0 { 
+  @include mix.flex-shrink(0);
+}
+.shrink-2 { 
+  @include mix.flex-shrink(2);
+}
+.shrink-3 { 
+  @include mix.flex-shrink(3);
+}
+
+// Flex basis (using mixins)
+.basis-auto { 
+  @include mix.flex-basis(auto);
+}
+.basis-full { 
+  @include mix.flex-basis(100%);
+}
+.basis-1-2 { 
+  @include mix.flex-basis(50%);
+}
+.basis-1-3 { 
+  @include mix.flex-basis(33.333333%);
+}
+.basis-0 { 
+  @include mix.flex-basis(0);
+}
+
+// Flex basis with rem values (using mixins)
+@each $key, $value in v.$spacers {
+  .basis-#{$key} { 
+    @include mix.flex-basis($value);
+  }
+}
+
+// ==========================================================================
+// Justify Content (using mixins)
+// ==========================================================================
+
+.justify-start { 
+  @include mix.justify-content(flex-start);
+}
+.justify-end { 
+  @include mix.justify-content(flex-end);
+}
+.justify-center { 
+  @include mix.justify-content(center);
+}
+.justify-between { 
+  @include mix.justify-content(space-between);
+}
+.justify-around { 
+  @include mix.justify-content(space-around);
+}
+.justify-evenly { 
+  @include mix.justify-content(space-evenly);
+}
+
+// ==========================================================================
+// Align Items (using mixins)
+// ==========================================================================
+
+.items-start { 
+  @include mix.align-items(flex-start);
+}
+.items-end { 
+  @include mix.align-items(flex-end);
+}
+.items-center { 
+  @include mix.align-items(center);
+}
+.items-baseline { 
+  @include mix.align-items(baseline);
+}
+.items-stretch { 
+  @include mix.align-items(stretch);
+}
+
+// ==========================================================================
+// Flex Utilities (using mixins)
+// ==========================================================================
+
+.flex-center {
+  @include mix.flex(row, center, center);
+}
+
+.flex-center-x {
+  @include mix.flex(row, center, stretch);
+}
+
+.flex-center-y {
+  @include mix.flex(row, flex-start, center);
+}
+
+.flex-between {
+  @include mix.flex(row, space-between, center);
+}
+
+.flex-around {
+  @include mix.flex(row, space-around, center);
+}
+
+.flex-evenly {
+  @include mix.flex(row, space-evenly, center);
+}
+
+.flex-stack {
+  @include mix.flex(column, flex-start, stretch);
+  gap: map.get(v.$spacers, 3);
+  
+  @media (min-width: map.get(v.$breakpoints, 'md')) {
+    @include mix.flex(row, flex-start, center);
+  }
+}
+
+.flex-stack-reverse {
+  @include mix.flex(column-reverse, flex-start, stretch);
+  gap: map.get(v.$spacers, 3);
+  
+  @media (min-width: map.get(v.$breakpoints, 'md')) {
+    @include mix.flex(row, flex-start, center);
+  }
+}
+
+// ==========================================================================
+// Responsive Flex Classes (cross-browser)
+// ==========================================================================
+
+@media (min-width: map.get(v.$breakpoints, 'sm')) {
+  .sm\:flex { 
+    @include mix.flex(row, flex-start, stretch);
+  }
+  .sm\:inline-flex { 
+    @include mix.inline-flex(row, flex-start, stretch);
+  }
+  .sm\:flex-row { 
+    @include mix.flex-direction(row);
+  }
+  .sm\:flex-col { 
+    @include mix.flex-direction(column);
+  }
+}
+
+@media (min-width: map.get(v.$breakpoints, 'md')) {
+  .md\:flex { 
+    @include mix.flex(row, flex-start, stretch);
+  }
+  .md\:inline-flex { 
+    @include mix.inline-flex(row, flex-start, stretch);
+  }
+  .md\:flex-row { 
+    @include mix.flex-direction(row);
+  }
+  .md\:flex-col { 
+    @include mix.flex-direction(column);
+  }
+}
+
+@media (min-width: map.get(v.$breakpoints, 'lg')) {
+  .lg\:flex { 
+    @include mix.flex(row, flex-start, stretch);
+  }
+  .lg\:inline-flex { 
+    @include mix.inline-flex(row, flex-start, stretch);
+  }
+  .lg\:flex-row { 
+    @include mix.flex-direction(row);
+  }
+  .lg\:flex-col { 
+    @include mix.flex-direction(column);
+  }
+}
+
+@media (min-width: map.get(v.$breakpoints, 'xl')) {
+  .xl\:flex { 
+    @include mix.flex(row, flex-start, stretch);
+  }
+  .xl\:inline-flex { 
+    @include mix.inline-flex(row, flex-start, stretch);
+  }
+  .xl\:flex-row { 
+    @include mix.flex-direction(row);
+  }
+  .xl\:flex-col { 
+    @include mix.flex-direction(column);
+  }
+}

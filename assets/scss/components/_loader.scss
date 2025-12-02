@@ -1,0 +1,518 @@
+@use 'sass:map';
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as m;
+
+// ==========================================================================
+// TECH LOADER
+// ==========================================================================
+
+.loader-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, v.$deep-blue 0%, v.$black 100%);
+  @include m.flex(column, center, center);
+  z-index: map.get(v.$z-indices, 'modal');
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(circle at 20% 50%, rgba(v.$primary, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 50%, rgba(v.$accent, 0.1) 0%, transparent 50%);
+    animation: backgroundPulse 4s ease-in-out infinite;
+  }
+}
+
+@keyframes backgroundPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.loader-container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  @include m.flex(column, center, center);
+  
+  @include m.respond-to-min('md') {
+    width: 400px;
+    height: 400px;
+  }
+}
+
+// ==========================================================================
+// ANIMATED CIRCLES
+// ==========================================================================
+
+.loader-circles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  @include m.flex(column, center, center);
+}
+
+.circle {
+  position: absolute;
+  border: 2px solid transparent;
+  @include m.border-radius(50%);
+  animation: rotate 3s linear infinite;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    background: v.$primary;
+    @include m.border-radius(50%);
+    @include m.box-shadow(0 0 15px v.$primary);
+    @include m.transform(translateX(-50%));
+  }
+}
+
+.circle-outer {
+  width: 100%;
+  height: 100%;
+  border-top-color: v.$primary;
+  border-right-color: v.$primary;
+  animation-duration: 3s;
+  @include m.box-shadow(0 0 20px rgba(v.$primary, 0.3));
+}
+
+.circle-middle {
+  width: 75%;
+  height: 75%;
+  border-top-color: v.$accent;
+  border-left-color: v.$accent;
+  animation-duration: 2s;
+  animation-direction: reverse;
+  @include m.box-shadow(0 0 15px rgba(v.$accent, 0.3));
+}
+
+.circle-inner {
+  width: 50%;
+  height: 50%;
+  border-bottom-color: v.$neon-cyan;
+  border-right-color: v.$neon-cyan;
+  animation-duration: 1.5s;
+  @include m.box-shadow(0 0 10px rgba(v.$neon-cyan, 0.3));
+}
+
+@keyframes rotate {
+  0% { 
+    @include m.transform(rotate(0deg)); 
+  }
+  100% { 
+    @include m.transform(rotate(360deg)); 
+  }
+}
+
+// ==========================================================================
+// CENTER ICON
+// ==========================================================================
+
+.loader-icon {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  z-index: 10;
+  animation: iconPulse 2s ease-in-out infinite;
+  
+  @include m.respond-to-min('md') {
+    width: 100px;
+    height: 100px;
+  }
+  
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.hex-shape {
+  fill: none;
+  stroke: v.$primary;
+  stroke-width: 2;
+  animation: hexGlow 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px v.$primary);
+}
+
+.center-dot {
+  fill: v.$neon-cyan;
+  animation: dotPulse 1.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px v.$neon-cyan);
+}
+
+.line-top,
+.line-bottom,
+.line-left,
+.line-right {
+  stroke: v.$accent;
+  stroke-width: 2;
+  stroke-linecap: round;
+  animation: lineExtend 1.5s ease-in-out infinite;
+}
+
+.line-top { animation-delay: 0s; }
+.line-right { animation-delay: 0.2s; }
+.line-bottom { animation-delay: 0.4s; }
+.line-left { animation-delay: 0.6s; }
+
+@keyframes iconPulse {
+  0%, 100% { 
+    @include m.transform(scale(1)); 
+  }
+  50% { 
+    @include m.transform(scale(1.1)); 
+  }
+}
+
+@keyframes hexGlow {
+  0%, 100% { 
+    stroke: v.$primary;
+    filter: drop-shadow(0 0 10px v.$primary);
+  }
+  50% { 
+    stroke: v.$accent;
+    filter: drop-shadow(0 0 20px v.$accent);
+  }
+}
+
+@keyframes dotPulse {
+  0%, 100% { 
+    r: 15;
+    fill: v.$neon-cyan;
+  }
+  50% { 
+    r: 18;
+    fill: v.$primary;
+  }
+}
+
+@keyframes lineExtend {
+  0%, 100% { stroke-dasharray: 0 50; }
+  50% { stroke-dasharray: 50 0; }
+}
+
+// ==========================================================================
+// PROGRESS RING
+// ==========================================================================
+
+.loader-progress {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  @include m.transform(rotate(-90deg));
+  
+  circle {
+    fill: none;
+    stroke-width: 2;
+  }
+}
+
+.progress-bg {
+  stroke: rgba(v.$primary, 0.1);
+}
+
+.progress-bar {
+  stroke: v.$primary;
+  stroke-linecap: round;
+  stroke-dasharray: 565;
+  stroke-dashoffset: 565;
+  animation: progressFill 2.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px v.$primary);
+}
+
+@keyframes progressFill {
+  0% { stroke-dashoffset: 565; }
+  50% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 565; }
+}
+
+// ==========================================================================
+// ORBITAL PARTICLES
+// ==========================================================================
+
+.orbital-particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: v.$neon-cyan;
+  @include m.border-radius(50%);
+  @include m.box-shadow(0 0 10px v.$neon-cyan);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    @include m.border-radius(50%);
+    animation: particleGlow 1s ease-in-out infinite;
+  }
+}
+
+.particle-1 {
+  top: 0;
+  left: 50%;
+  animation: orbit1 4s linear infinite;
+}
+
+.particle-2 {
+  top: 50%;
+  right: 0;
+  animation: orbit2 3s linear infinite;
+}
+
+.particle-3 {
+  bottom: 0;
+  left: 50%;
+  animation: orbit3 3.5s linear infinite;
+}
+
+.particle-4 {
+  top: 50%;
+  left: 0;
+  animation: orbit4 4.5s linear infinite;
+}
+
+@keyframes orbit1 {
+  0% { 
+    @include m.transform(translate(-50%, 0) rotate(0deg) translateX(150px) rotate(0deg)); 
+  }
+  100% { 
+    @include m.transform(translate(-50%, 0) rotate(360deg) translateX(150px) rotate(-360deg)); 
+  }
+}
+
+@keyframes orbit2 {
+  0% { 
+    @include m.transform(translate(0, -50%) rotate(0deg) translateX(150px) rotate(0deg)); 
+  }
+  100% { 
+    @include m.transform(translate(0, -50%) rotate(360deg) translateX(150px) rotate(-360deg)); 
+  }
+}
+
+@keyframes orbit3 {
+  0% { 
+    @include m.transform(translate(-50%, 0) rotate(0deg) translateX(150px) rotate(0deg)); 
+  }
+  100% { 
+    @include m.transform(translate(-50%, 0) rotate(-360deg) translateX(150px) rotate(360deg)); 
+  }
+}
+
+@keyframes orbit4 {
+  0% { 
+    @include m.transform(translate(0, -50%) rotate(0deg) translateX(150px) rotate(0deg)); 
+  }
+  100% { 
+    @include m.transform(translate(0, -50%) rotate(-360deg) translateX(150px) rotate(360deg)); 
+  }
+}
+
+@keyframes particleGlow {
+  0%, 100% { 
+    @include m.transform(scale(1)); 
+    opacity: 1; 
+  }
+  50% { 
+    @include m.transform(scale(1.5)); 
+    opacity: 0.5; 
+  }
+}
+
+// ==========================================================================
+// CORNER DECORATIONS
+// ==========================================================================
+
+.corner-decoration {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  opacity: 0.6;
+  
+  @include m.respond-to-min('md') {
+    width: 80px;
+    height: 80px;
+  }
+  
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.corner-line {
+  fill: none;
+  stroke: v.$primary;
+  stroke-width: 2;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: cornerDraw 3s ease-in-out infinite;
+}
+
+.corner-tl {
+  top: map.get(v.$spacers, 4);
+  left: map.get(v.$spacers, 4);
+  
+  @include m.respond-to-min('md') {
+    top: map.get(v.$spacers, 6);
+    left: map.get(v.$spacers, 6);
+  }
+}
+
+.corner-tr {
+  top: map.get(v.$spacers, 4);
+  right: map.get(v.$spacers, 4);
+  
+  @include m.respond-to-min('md') {
+    top: map.get(v.$spacers, 6);
+    right: map.get(v.$spacers, 6);
+  }
+  
+  .corner-line { animation-delay: 0.5s; }
+}
+
+.corner-bl {
+  bottom: map.get(v.$spacers, 4);
+  left: map.get(v.$spacers, 4);
+  
+  @include m.respond-to-min('md') {
+    bottom: map.get(v.$spacers, 6);
+    left: map.get(v.$spacers, 6);
+  }
+  
+  .corner-line { animation-delay: 1s; }
+}
+
+.corner-br {
+  bottom: map.get(v.$spacers, 4);
+  right: map.get(v.$spacers, 4);
+  
+  @include m.respond-to-min('md') {
+    bottom: map.get(v.$spacers, 6);
+    right: map.get(v.$spacers, 6);
+  }
+  
+  .corner-line { animation-delay: 1.5s; }
+}
+
+@keyframes cornerDraw {
+  0%, 100% { stroke-dashoffset: 100; }
+  50% { stroke-dashoffset: 0; }
+}
+
+// ==========================================================================
+// DATA STREAMS
+// ==========================================================================
+
+.data-streams {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.stream {
+  position: absolute;
+  width: 2px;
+  height: 100px;
+  background: linear-gradient(180deg, transparent 0%, v.$neon-cyan 50%, transparent 100%);
+  @include m.box-shadow(0 0 10px v.$neon-cyan);
+}
+
+.stream-1 {
+  left: 20%;
+  animation: streamFlow 3s ease-in-out infinite;
+}
+
+.stream-2 {
+  left: 40%;
+  animation: streamFlow 2.5s ease-in-out infinite 0.5s;
+}
+
+.stream-3 {
+  left: 60%;
+  animation: streamFlow 3.5s ease-in-out infinite 1s;
+}
+
+.stream-4 {
+  left: 80%;
+  animation: streamFlow 2.8s ease-in-out infinite 1.5s;
+}
+
+@keyframes streamFlow {
+  0% { 
+    top: -100px;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% { 
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+// ==========================================================================
+// SCANNING LINE
+// ==========================================================================
+
+.scan-line {
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, v.$neon-cyan 50%, transparent 100%);
+  @include m.box-shadow(0 0 20px v.$neon-cyan);
+  animation: scanMove 2s ease-in-out infinite;
+}
+
+@keyframes scanMove {
+  0% { top: -2px; }
+  100% { top: 100%; }
+}
+
+// ==========================================================================
+// FADE OUT ANIMATION
+// ==========================================================================
+
+.loader-wrapper.fade-out {
+  animation: loaderFadeOut 0.8s ease-out forwards;
+}
+
+@keyframes loaderFadeOut {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}

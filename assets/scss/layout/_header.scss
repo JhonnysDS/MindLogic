@@ -1,0 +1,468 @@
+// Import Sass modules for variables, mixins, and map functions
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as mix;
+@use 'sass:map';
+
+// Main header component with fixed positioning and responsive behavior
+.header {
+  position: fixed;  // Stays at top when scrolling
+  top: 0px;
+  width: 100%;
+  padding: map.get(v.$spacers, 3) 0;
+  z-index: map.get(v.$z-indices, 'navbar');   // High z-index to stay above content
+  height: 87px;
+
+  .container {
+    position: relative;
+
+    // Tablet/Mobile: Flexbox layout with three main elements
+    // Layout order: Logo - Button - Toggle
+    @include mix.respond-to-max('md') {
+      @include mix.flex(row, space-between, center);
+    }
+  }
+
+  .logo {
+    height: 35px;
+    z-index: 1001;
+
+    @include mix.respond-to-max('md') {
+      width: 35%;
+      height: 45px;
+    }
+
+    @include mix.respond-to-min('xl') {
+      width: 20%;
+      height: 55px;
+      max-width: 200px;
+    }
+
+    .image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .overlay-link {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+  }
+
+  .navbar {
+    @include mix.respond-to-min('md-c') {
+      position: static;
+      background: transparent;
+      height: auto;
+    }
+
+    @include mix.respond-to-max('md-c') {
+      position: fixed;
+      left: 0;
+      top: -100vh;
+      width: 100%;
+      height: 100vh;
+      background-color: rgba(v.$black, 0.95);
+      backdrop-filter: blur(10px);
+      @include mix.flex(column, flex-start, flex-start);
+      z-index: 1000;
+      @include mix.transition(top 0.3s ease);
+      padding-top: 80px;
+      overflow-y: auto;
+
+      &.mobile-menu-open {
+        top: 0;
+      }
+    }
+
+    .nav-menu {
+      @include mix.flex(row, flex-start, center);
+      gap: 10px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+
+      @include mix.respond-to-min('md-c') {
+        @include mix.flex-direction(row);
+        gap: 30px;
+      }
+
+      @include mix.respond-to-max('md-c') {
+        @include mix.flex-direction(column);
+        @include mix.align-items(flex-start);
+        gap: 0;
+        text-align: left;
+        padding: 0 map.get(v.$spacers, 4);
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      > li {
+        @include mix.respond-to-max('md-c') {
+          width: 100%;
+        }
+
+        @include mix.respond-to-min('md-c') {
+          width: auto;
+        }
+      }
+
+      .nav-link {
+        color: v.$white;
+        text-decoration: none;
+        font-weight: map.get(v.$font-weights, 'medium');
+        @include mix.transition(v.$transition-base);
+        position: relative;
+        display: block;
+
+        @include mix.respond-to-min('md-c') {
+          padding: 5px 0;
+          font-size: map.get(v.$font-sizes, 'base');
+        }
+
+        @include mix.respond-to-max('md-c') {
+          padding: map.get(v.$spacers, 3) 0;
+          font-size: map.get(v.$font-sizes, 'md-c');
+          width: 100%;
+          border-bottom: 1px solid rgba(v.$white, 0.1);
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          width: 0;
+          height: 2px;
+          background-color: v.$primary;
+          @include mix.transition(all 0.3s ease);
+          @include mix.transform(translateX(-50%));
+
+          @include mix.respond-to-max('md-c') {
+            display: none;
+          }
+        }
+
+        &:hover, &.active {
+          color: v.$primary;
+
+          &::after {
+            width: 100%;
+          }
+        }
+      }
+
+      .dropdown {
+        position: relative;
+
+        @include mix.respond-to-max('md-c') {
+          width: 100%;
+        }
+
+        .dropdown-toggle {
+          cursor: pointer;
+          color: v.$white;
+          text-decoration: none;
+          font-weight: map.get(v.$font-weights, 'medium');
+          @include mix.transition(v.$transition-base);
+          position: relative;
+          display: block;
+
+          @include mix.respond-to-min('md-c') {
+            padding: 5px 0;
+            font-size: map.get(v.$font-sizes, 'base');
+          }
+
+          @include mix.respond-to-max('md-c') {
+            padding: map.get(v.$spacers, 3) 0;
+            font-size: map.get(v.$font-sizes, 'md-c');
+            width: 100%;
+            border-bottom: 1px solid rgba(v.$white, 0.1);
+            @include mix.flex(row, space-between, center);
+          }
+
+          &::after {
+            content: '▼';
+            font-size: 10px;
+            @include mix.transition(transform 0.3s ease);
+
+            @include mix.respond-to-min('md-c') {
+              position: relative;
+              left: 5px;
+            }
+
+            @include mix.respond-to-max('md-c') {
+              font-size: 12px;
+            }
+          }
+
+          &.active::after {
+            @include mix.transform(rotate(180deg));
+          }
+
+          &::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: v.$primary;
+            @include mix.transition(all 0.3s ease);
+            @include mix.transform(translateX(-50%));
+
+            @include mix.respond-to-max('md-c') {
+              display: none;
+            }
+          }
+
+          &:hover {
+            color: v.$primary;
+
+            &::before {
+              width: 100%;
+            }
+          }
+        }
+
+        .dropdown-menu {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+
+          @include mix.respond-to-max('md-c') {
+            position: static;
+            background-color: rgba(v.$white, 0.05);
+            backdrop-filter: blur(10px);
+            margin-left: map.get(v.$spacers, 3);
+            border-left: 2px solid rgba(v.$primary, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            max-height: 0;
+            overflow: hidden;
+            @include mix.transition(all 0.3s ease);
+
+            &.dropdown-open {
+              opacity: 1;
+              visibility: visible;
+              max-height: 500px;
+              padding: map.get(v.$spacers, 2) 0;
+              margin-top: map.get(v.$spacers, 2);
+            }
+          }
+
+          @include mix.respond-to-min('md-c') {
+            position: absolute;
+            top: 140%;
+            left: -10px;
+            @include mix.transform(translateY(-10px));
+            background-color: v.$white;
+            @include mix.box-shadow(v.$box-shadow-lg);
+            min-width: 180px;
+            padding: map.get(v.$spacers, 2) 0;
+            z-index: map.get(v.$z-indices, 'dropdown');
+            opacity: 0;
+            visibility: hidden;
+            @include mix.transition(v.$transition-base);
+          }
+
+          .dropdown-item {
+            display: block;
+            padding: map.get(v.$spacers, 2) map.get(v.$spacers, 3);
+            text-decoration: none;
+            font-family: v.$font-family-sans;
+            font-weight: map.get(v.$font-weights, 'regular');
+            @include mix.transition(v.$transition-base);
+
+            @include mix.respond-to-max('md-c') {
+              color: v.$white;
+              font-size: map.get(v.$font-sizes, 'base');
+              text-align: left;
+              border-bottom: 1px solid rgba(v.$white, 0.05);
+
+              &:last-child {
+                border-bottom: none;
+              }
+            }
+
+            @include mix.respond-to-min('md-c') {
+              color: v.$dark-gray;
+              font-size: map.get(v.$font-sizes, 'sm');
+            }
+
+            &:hover {
+              background-color: rgba(v.$primary, 0.1);
+              color: v.$primary;
+              padding-left: map.get(v.$spacers, 4);
+
+              @include mix.respond-to-max('md-c') {
+                background-color: rgba(v.$primary, 0.2);
+              }
+            }
+          }
+        }
+
+        @include mix.respond-to-min('md-c') {
+          &:hover {
+            .dropdown-toggle {
+              color: v.$primary;
+
+              &::before {
+                width: 100%;
+              }
+            }
+
+            .dropdown-menu {
+              opacity: 1;
+              visibility: visible;
+              @include mix.transform(translateY(0));
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .actions {
+    .theme-switcher {
+      margin: 0 1rem;
+
+      .theme-toggle-btn {
+        background-color: v.$white;
+        border: 1px solid #30363d;
+        border-radius: 50%;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        @include mix.flex(column, center, center);
+        padding: 5px;
+        transition: all 0.3s ease;
+
+        &:hover {
+          border-color: v.$primary;
+        }
+
+        svg {
+          width: 22px;
+          height: 22px;
+          color: v.$primary;
+          transition: color 0.3s ease;
+        }
+      }
+
+      .moon-icon {
+        display: none;
+      }
+
+      .dark-mode {
+        .moon-icon {
+          display: block;
+        }
+
+        .sun-icon {
+          display: none;
+        }
+      }
+    }
+
+    .btn-get-quotes {
+      white-space: nowrap;
+      z-index: 1001;
+      visibility: visible;
+
+      @include mix.respond-to-max('md') {
+        visibility: hidden;
+      }
+    }
+  }
+
+  .mobile-menu-toggle {
+    @include mix.flex(column, center, center);
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+    position: relative;
+
+    @include mix.respond-to-min('md-c') {
+      display: none;
+    }
+
+    @include mix.respond-to-max('md-c') {
+      order: 3;
+    }
+
+    .hamburger-line {
+      width: 25px;
+      height: 3px;
+      background-color: v.$white;
+      margin: 2px 0;
+      @include mix.transition(v.$transition-smooth);
+      transform-origin: center;
+
+      &:nth-child(1) {
+        @include mix.transform(translateY(0));
+      }
+
+      &:nth-child(2) {
+        opacity: 1;
+      }
+
+      &:nth-child(3) {
+        @include mix.transform(translateY(0));
+      }
+    }
+
+    &.active {
+      .hamburger-line {
+        background-color: v.$white !important;
+
+        &:nth-child(1) {
+          @include mix.transform(translateY(7px) rotate(45deg));
+        }
+
+        &:nth-child(2) {
+          opacity: 0;
+        }
+
+        &:nth-child(3) {
+          @include mix.transform(translateY(-7px) rotate(-45deg));
+        }
+      }
+    }
+  }
+
+  &.header-transparent {
+    background-color: transparent;
+    @include mix.transition(all 0.4s);
+  }
+
+  &.header-scrolled {
+    background-color: #161b22;
+    @include mix.box-shadow(v.$box-shadow);
+    @include mix.transition(all 0.4s);
+
+    .mobile-menu-toggle .hamburger-line {
+      background-color: v.$black;
+    }
+
+    .navbar .nav-menu .nav-link {
+      &:hover, &.active {
+        color: v.$primary;
+      }
+    }
+
+    .navbar .nav-menu .dropdown .dropdown-toggle {
+      &:hover {
+        color: v.$primary;
+      }
+    }
+  }
+}

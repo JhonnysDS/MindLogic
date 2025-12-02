@@ -1,0 +1,68 @@
+@use 'sass:math';
+@use 'sass:map';
+@use 'sass:color';
+@use 'variables' as v;
+
+// ... (Existing mixins for respond-to, flex, grid, etc. - keeping them as they are useful)
+
+@mixin respond-to-min($breakpoint) {
+  $value: map.get(v.$breakpoints, $breakpoint);
+
+  @if $value !=null {
+    @media (min-width: $value) {
+      @content;
+    }
+  }
+
+  @else {
+    @error "No value found for breakpoint '#{$breakpoint}'";
+  }
+}
+
+@mixin respond-to-max($breakpoint) {
+  $value: map.get(v.$breakpoints, $breakpoint);
+
+  @if $value !=null {
+    @media (max-width: $value) {
+      @content;
+    }
+  }
+
+  @else {
+    @error "No value found for breakpoint '#{$breakpoint}'";
+  }
+}
+
+// ... (Keeping standard layout mixins for compatibility if needed, but focusing on new effects)
+
+// ==========================================================================
+// DESIGN SYSTEM EFFECTS
+// ==========================================================================
+
+@mixin glassmorphism($mode: 'light') {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  @if $mode =='light' {
+    background: var(--glass-bg, rgba(255, 255, 255, 0.7));
+    border: 1px solid var(--glass-border, rgba(0, 0, 0, 0.05));
+    box-shadow: var(--glass-shadow, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+  }
+
+  @else if $mode =='dark' {
+    background: var(--glass-bg, rgba(255, 255, 255, 0.03));
+    border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.1));
+    box-shadow: none;
+  }
+}
+
+@mixin neon-glow($color: v.$primary) {
+  box-shadow: 0 0 20px rgba($color, 0.5);
+}
+
+@mixin text-gradient($gradient: v.$primary-gradient) {
+  background: $gradient;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

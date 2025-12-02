@@ -1,0 +1,29 @@
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as mix;
+@use 'sass:map';
+
+// Button Groups for Demo
+.button-group {
+  .inline {
+    @include mix.flex(row, flex-start, center, wrap);
+  }
+  
+  h3 {
+    font-family: v.$font-family-heading;
+    font-size: map.get(v.$font-sizes, 'lg');
+    font-weight: map.get(v.$font-weights, 'semibold');
+    border-bottom: 2px solid v.$primary;
+    padding-bottom: map.get(v.$spacers, 1);
+    display: inline-block;
+  }
+  
+  .btn-group {
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+  
+  .cta-buttons {
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+}
