@@ -155,57 +155,163 @@
 .btn-social {
   @extend .btn-icon;
   border: 2px solid transparent;
-
+  background-color: rgba(var(--color-neon-blue-rgb, 0, 243, 255), 0.1);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  
   &:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    background-color: var(--color-neon-blue, #00f3ff);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 243, 255, 0.4);
   }
 
-  &.btn-twitter {
-    background-color: #1DA1F2;
+  svg {
+    stroke: var(--color-neon-blue, #00f3ff);
+    fill: none;
+  }
+
+  &:hover svg {
+    stroke: var(--color-black, #000000);
+  }
+
+  body.dark-mode & {
+    background-color: rgba(0, 243, 255, 0.15);
+    
+    &:hover {
+      background-color: var(--color-neon-blue, #00f3ff);
+    }
+  }
+
+  // Variantes opcionales si se necesitan colores específicos
+  &.btn-x {
+    background-color: rgba(0, 0, 0, 0.1);
+    
+    svg {
+      stroke: #000000;
+      fill: none;
+    }
 
     &:hover {
-      background-color: #1A91DA;
+      background-color: #000000;
+      
+      svg {
+        stroke: #ffffff;
+      }
+    }
+    
+    body.dark-mode & {
+      background-color: rgba(255, 255, 255, 0.1);
+      
+      svg {
+        stroke: #ffffff;
+      }
+      
+      &:hover {
+        background-color: #ffffff;
+        
+        svg {
+          stroke: #000000;
+        }
+      }
     }
   }
 
   &.btn-facebook {
-    background-color: #4267B2;
+    background-color: rgba(66, 103, 178, 0.1);
+    
+    svg {
+      stroke: #4267B2;
+      fill: none;
+    }
 
     &:hover {
-      background-color: #365899;
+      background-color: #4267B2;
+      
+      svg {
+        stroke: #ffffff;
+      }
     }
   }
 
   &.btn-linkedin {
-    background-color: #0077B5;
+    background-color: rgba(0, 119, 181, 0.1);
+    
+    svg {
+      stroke: #0077B5;
+      fill: none;
+    }
 
     &:hover {
-      background-color: #006097;
+      background-color: #0077B5;
+      
+      svg {
+        stroke: #ffffff;
+      }
     }
   }
 
   &.btn-instagram {
-    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    background: rgba(225, 48, 108, 0.1);
+    
+    svg {
+      stroke: #E1306C;
+      fill: none;
+    }
 
     &:hover {
-      opacity: 0.9;
+      background-color: #E1306C;
+      
+      svg {
+        stroke: #ffffff;
+      }
     }
   }
 
   &.btn-youtube {
-    background-color: #FF0000;
+    background-color: rgba(255, 0, 0, 0.1);
+    
+    svg {
+      color: #FF0000;
+    }
 
     &:hover {
-      background-color: #cc0000;
+      background-color: #FF0000;
+      
+      svg {
+        color: #ffffff;
+      }
     }
   }
 
   &.btn-github {
-    background-color: #333333;
+    background-color: rgba(51, 51, 51, 0.1);
+    
+    svg {
+      color: #333333;
+    }
 
     &:hover {
-      background-color: #1a1a1a;
+      background-color: #333333;
+      
+      svg {
+        color: #ffffff;
+      }
+    }
+    
+    body.dark-mode & {
+      background-color: rgba(255, 255, 255, 0.1);
+      
+      svg {
+        color: #ffffff;
+      }
+      
+      &:hover {
+        background-color: #ffffff;
+        
+        svg {
+          color: #000000;
+        }
+      }
     }
   }
 }

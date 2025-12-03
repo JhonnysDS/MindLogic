@@ -27,10 +27,18 @@ body {
   font-size: map.get(v.$font-sizes, 'base');
   font-weight: map.get(v.$font-weights, 'regular');
   line-height: 1.6;
-  color: v.$dark-gray;
+  color: #0f172a;  // Slate 900 - Light mode text
+  background-color: #f8fafc;  // Slate 50 - Light mode background
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+// Dark Mode Body Styles
+body.dark-mode {
+  color: #ffffff;  // White text
+  background-color: #020617;  // Deep Space background
 }
 
 // Links

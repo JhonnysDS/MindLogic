@@ -1,0 +1,198 @@
+// ==========================================================================
+// HERO SECTION - Home Page
+// ==========================================================================
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as mix;
+@use 'sass:map';
+
+.hero-section {
+  min-height: 100vh;
+  @include mix.flex(row, center, center);
+  padding: 120px map.get(v.$spacers, 4) map.get(v.$spacers, 6);
+  position: relative;
+  overflow: hidden;
+  
+  // Animated background pattern
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(circle at 20% 50%, rgba(0, 243, 255, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(189, 0, 255, 0.03) 0%, transparent 50%);
+    z-index: 0;
+    animation: pulse-bg 8s ease-in-out infinite;
+  }
+
+  @include mix.respond-to-max('md-c') {
+    min-height: auto;
+    padding: 100px map.get(v.$spacers, 3) map.get(v.$spacers, 5);
+  }
+}
+
+.hero-container {
+  max-width: 1280px;
+  width: 100%;
+  @include mix.flex(row, space-between, center);
+  gap: map.get(v.$spacers, 8);
+  position: relative;
+  z-index: 1;
+
+  @include mix.respond-to-max('md-c') {
+    @include mix.flex(column, center, center);
+    gap: map.get(v.$spacers, 6);
+    text-align: center;
+  }
+}
+
+// ==========================================================================
+// HERO CONTENT (Left Side)
+// ==========================================================================
+.hero-content {
+  flex: 1;
+  max-width: 600px;
+
+  @include mix.respond-to-max('md-c') {
+    max-width: 100%;
+  }
+}
+
+.hero-title {
+  font-family: v.$font-family-heading;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: map.get(v.$font-weights, 'bold');
+  line-height: 1.2;
+  margin-bottom: map.get(v.$spacers, 3);
+  
+  body.dark-mode & {
+    color: v.$white;
+  }
+}
+
+.hero-subtitle {
+  font-family: v.$font-family-heading;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: map.get(v.$font-weights, 'semibold');
+  line-height: 1.3;
+  margin-bottom: map.get(v.$spacers, 4);
+  background: linear-gradient(135deg, v.$neon-blue 0%, v.$neon-purple 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-description {
+  font-size: map.get(v.$font-sizes, 'lg');
+  line-height: 1.6;
+  margin-bottom: map.get(v.$spacers, 5);
+  color: #475569;
+  
+  body.dark-mode & {
+    color: #9ca3af;
+  }
+}
+
+// ==========================================================================
+// LAYOUT CONTAINERS (Reutilizan mixins)
+// ==========================================================================
+.hero-social {
+  @include mix.flex(row, flex-start, center);
+  gap: map.get(v.$spacers, 3);
+  margin-bottom: map.get(v.$spacers, 5);
+
+  @include mix.respond-to-max('md-c') {
+    justify-content: center;
+  }
+}
+
+.hero-buttons {
+  @include mix.flex(row, flex-start, center);
+  gap: map.get(v.$spacers, 3);
+  flex-wrap: wrap;
+
+  @include mix.respond-to-max('md-c') {
+    justify-content: center;
+  }
+}
+
+// ==========================================================================
+// HERO IMAGE (Right Side)
+// ==========================================================================
+.hero-image {
+  flex: 1;
+  position: relative;
+  @include mix.flex(row, center, center);
+  max-width: 600px;
+
+  @include mix.respond-to-max('md-c') {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+.brain-image {
+  width: 100%;
+  height: auto;
+  max-width: 500px;
+  position: relative;
+  z-index: 2;
+  animation: float 6s ease-in-out infinite;
+  filter: drop-shadow(0 20px 40px rgba(0, 243, 255, 0.3));
+
+  body.dark-mode & {
+    filter: drop-shadow(0 20px 60px rgba(0, 243, 255, 0.5));
+  }
+
+  @include mix.respond-to-max('md') {
+    max-width: 350px;
+  }
+}
+
+.brain-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  background: radial-gradient(circle, rgba(0, 243, 255, 0.2) 0%, transparent 70%);
+  z-index: 1;
+  animation: pulse-glow 4s ease-in-out infinite;
+  
+  body.dark-mode & {
+    background: radial-gradient(circle, rgba(0, 243, 255, 0.3) 0%, rgba(189, 0, 255, 0.1) 50%, transparent 70%);
+  }
+}
+
+// ==========================================================================
+// ANIMATIONS
+// ==========================================================================
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+@keyframes pulse-bg {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+

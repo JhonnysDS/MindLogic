@@ -1,3 +1,6 @@
+// ==========================================================================
+// NEXUS NAVBAR - Header Component
+// ==========================================================================
 // Import Sass modules for variables, mixins, and map functions
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins' as mix;
@@ -8,98 +11,123 @@
   position: fixed;  // Stays at top when scrolling
   top: 0px;
   width: 100%;
-  padding: map.get(v.$spacers, 3) 0;
+  padding: 0;
   z-index: map.get(v.$z-indices, 'navbar');   // High z-index to stay above content
-  height: 87px;
+  height: 80px;
+  background-color: rgba(v.$light-gray, 0.5);  // Light background by default
+  @include mix.transition(all 0.5s ease);
+  
+  // Glassmorphism effect when scrolled
+  &.glass-nav {
+    background: rgba(v.$light-gray, 0.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(v.$black, 0.1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
 
   .container {
     position: relative;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 map.get(v.$spacers, 4);
+    height: 80px;
+    @include mix.flex(row, space-between, center);
 
-    // Tablet/Mobile: Flexbox layout with three main elements
-    // Layout order: Logo - Button - Toggle
     @include mix.respond-to-max('md') {
-      @include mix.flex(row, space-between, center);
+      padding: 0 map.get(v.$spacers, 3);
     }
   }
 
+  // Logo con animación
   .logo {
-    height: 35px;
+    @include mix.flex(row, flex-start, center);
+    cursor: pointer;
     z-index: 1001;
+    flex-shrink: 0;
+
+    .logo-image {
+      height: 170px;
+      width: auto;
+      object-fit: contain;
+      @include mix.transition(all 0.3s ease);
+      
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
 
     @include mix.respond-to-max('md') {
-      width: 35%;
-      height: 45px;
+      .logo-image {
+        height: 170px;
+      }
     }
-
+    
     @include mix.respond-to-min('xl') {
-      width: 20%;
-      height: 55px;
-      max-width: 200px;
-    }
-
-    .image {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .overlay-link {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
+      .logo-image {
+        height: 170px;
+      }
     }
   }
 
-  .navbar {
+  // Desktop Navigation Wrapper
+  .nav-desktop {
+    display: none;
+    
     @include mix.respond-to-min('md-c') {
-      position: static;
-      background: transparent;
-      height: auto;
+      display: block;
     }
+  }
 
+  // Desktop Navigation (inside .nav-desktop)
+  .nav-desktop .navbar {
+    position: static;
+    background: transparent;
+    height: auto;
+  }
+  
+  // Mobile Navigation Container (hide on desktop)
+  .navbar-mobile {
+    display: none;
+    
     @include mix.respond-to-max('md-c') {
+      display: flex;
       position: fixed;
       left: 0;
       top: -100vh;
       width: 100%;
       height: 100vh;
-      background-color: rgba(v.$black, 0.95);
-      backdrop-filter: blur(10px);
+      background: rgba(v.$white, 0.95);
+      backdrop-filter: blur(20px);
       @include mix.flex(column, flex-start, flex-start);
       z-index: 1000;
       @include mix.transition(top 0.3s ease);
-      padding-top: 80px;
+      padding-top: 100px;
       overflow-y: auto;
 
       &.mobile-menu-open {
         top: 0;
       }
     }
+  }
 
-    .nav-menu {
-      @include mix.flex(row, flex-start, center);
-      gap: 10px;
+  // Navigation Menu (shared styles for desktop and mobile)
+  .nav-menu {
+      @include mix.flex(row, center, center);
+      gap: 32px;
       list-style: none;
       margin: 0;
       padding: 0;
-      width: 100%;
 
       @include mix.respond-to-min('md-c') {
         @include mix.flex-direction(row);
-        gap: 30px;
       }
 
       @include mix.respond-to-max('md-c') {
         @include mix.flex-direction(column);
         @include mix.align-items(flex-start);
         gap: 0;
-        text-align: left;
+        width: 100%;
         padding: 0 map.get(v.$spacers, 4);
-        max-width: 400px;
-        margin: 0 auto;
       }
 
       > li {
@@ -113,356 +141,247 @@
       }
 
       .nav-link {
-        color: v.$white;
-        text-decoration: none;
+        font-family: v.$font-family-heading;
+        font-size: map.get(v.$font-sizes, 'sm');
         font-weight: map.get(v.$font-weights, 'medium');
+        text-decoration: none;
         @include mix.transition(v.$transition-base);
         position: relative;
         display: block;
+        color: #475569;  // Slate 600 for light mode
 
         @include mix.respond-to-min('md-c') {
-          padding: 5px 0;
-          font-size: map.get(v.$font-sizes, 'base');
+          padding: 8px 0;
         }
 
         @include mix.respond-to-max('md-c') {
           padding: map.get(v.$spacers, 3) 0;
-          font-size: map.get(v.$font-sizes, 'md-c');
+          font-size: map.get(v.$font-sizes, 'base');
           width: 100%;
-          border-bottom: 1px solid rgba(v.$white, 0.1);
-        }
-
-        &::after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 50%;
-          width: 0;
-          height: 2px;
-          background-color: v.$primary;
-          @include mix.transition(all 0.3s ease);
-          @include mix.transform(translateX(-50%));
-
-          @include mix.respond-to-max('md-c') {
-            display: none;
-          }
+          border-bottom: 1px solid rgba(v.$black, 0.1);
         }
 
         &:hover, &.active {
-          color: v.$primary;
-
-          &::after {
-            width: 100%;
-          }
+          color: v.$neon-blue;
         }
       }
+  }
 
-      .dropdown {
-        position: relative;
-
-        @include mix.respond-to-max('md-c') {
-          width: 100%;
-        }
-
-        .dropdown-toggle {
-          cursor: pointer;
-          color: v.$white;
-          text-decoration: none;
-          font-weight: map.get(v.$font-weights, 'medium');
-          @include mix.transition(v.$transition-base);
-          position: relative;
-          display: block;
-
-          @include mix.respond-to-min('md-c') {
-            padding: 5px 0;
-            font-size: map.get(v.$font-sizes, 'base');
-          }
-
-          @include mix.respond-to-max('md-c') {
-            padding: map.get(v.$spacers, 3) 0;
-            font-size: map.get(v.$font-sizes, 'md-c');
-            width: 100%;
-            border-bottom: 1px solid rgba(v.$white, 0.1);
-            @include mix.flex(row, space-between, center);
-          }
-
-          &::after {
-            content: '▼';
-            font-size: 10px;
-            @include mix.transition(transform 0.3s ease);
-
-            @include mix.respond-to-min('md-c') {
-              position: relative;
-              left: 5px;
-            }
-
-            @include mix.respond-to-max('md-c') {
-              font-size: 12px;
-            }
-          }
-
-          &.active::after {
-            @include mix.transform(rotate(180deg));
-          }
-
-          &::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background-color: v.$primary;
-            @include mix.transition(all 0.3s ease);
-            @include mix.transform(translateX(-50%));
-
-            @include mix.respond-to-max('md-c') {
-              display: none;
-            }
-          }
-
-          &:hover {
-            color: v.$primary;
-
-            &::before {
-              width: 100%;
-            }
-          }
-        }
-
-        .dropdown-menu {
-          list-style: none;
-          margin: 0;
-          padding: 0;
-
-          @include mix.respond-to-max('md-c') {
-            position: static;
-            background-color: rgba(v.$white, 0.05);
-            backdrop-filter: blur(10px);
-            margin-left: map.get(v.$spacers, 3);
-            border-left: 2px solid rgba(v.$primary, 0.3);
-            opacity: 0;
-            visibility: hidden;
-            max-height: 0;
-            overflow: hidden;
-            @include mix.transition(all 0.3s ease);
-
-            &.dropdown-open {
-              opacity: 1;
-              visibility: visible;
-              max-height: 500px;
-              padding: map.get(v.$spacers, 2) 0;
-              margin-top: map.get(v.$spacers, 2);
-            }
-          }
-
-          @include mix.respond-to-min('md-c') {
-            position: absolute;
-            top: 140%;
-            left: -10px;
-            @include mix.transform(translateY(-10px));
-            background-color: v.$white;
-            @include mix.box-shadow(v.$box-shadow-lg);
-            min-width: 180px;
-            padding: map.get(v.$spacers, 2) 0;
-            z-index: map.get(v.$z-indices, 'dropdown');
-            opacity: 0;
-            visibility: hidden;
-            @include mix.transition(v.$transition-base);
-          }
-
-          .dropdown-item {
-            display: block;
-            padding: map.get(v.$spacers, 2) map.get(v.$spacers, 3);
-            text-decoration: none;
-            font-family: v.$font-family-sans;
-            font-weight: map.get(v.$font-weights, 'regular');
-            @include mix.transition(v.$transition-base);
-
-            @include mix.respond-to-max('md-c') {
-              color: v.$white;
-              font-size: map.get(v.$font-sizes, 'base');
-              text-align: left;
-              border-bottom: 1px solid rgba(v.$white, 0.05);
-
-              &:last-child {
-                border-bottom: none;
-              }
-            }
-
-            @include mix.respond-to-min('md-c') {
-              color: v.$dark-gray;
-              font-size: map.get(v.$font-sizes, 'sm');
-            }
-
-            &:hover {
-              background-color: rgba(v.$primary, 0.1);
-              color: v.$primary;
-              padding-left: map.get(v.$spacers, 4);
-
-              @include mix.respond-to-max('md-c') {
-                background-color: rgba(v.$primary, 0.2);
-              }
-            }
-          }
-        }
-
-        @include mix.respond-to-min('md-c') {
-          &:hover {
-            .dropdown-toggle {
-              color: v.$primary;
-
-              &::before {
-                width: 100%;
-              }
-            }
-
-            .dropdown-menu {
-              opacity: 1;
-              visibility: visible;
-              @include mix.transform(translateY(0));
-            }
-          }
-        }
-      }
+  // CTA Button con Mobile Wrapper
+  .cta-mobile-wrapper {
+    width: 100%;
+    margin-top: map.get(v.$spacers, 4);
+    padding: 0 map.get(v.$spacers, 4);
+    
+    @include mix.respond-to-min('md-c') {
+      display: none;
     }
   }
 
+  // Actions Container (Theme + CTA)
   .actions {
-    .theme-switcher {
-      margin: 0 1rem;
+    @include mix.flex(row, center, center);
+    gap: 1rem;
+    z-index: 1001;
 
-      .theme-toggle-btn {
-        background-color: v.$white;
-        border: 1px solid #30363d;
-        border-radius: 50%;
+    @include mix.respond-to-max('md-c') {
+      gap: 0.75rem;
+    }
+
+    // Theme Toggle Button
+    .theme-toggle {
+      padding: 0.5rem;
+      border-radius: 9999px;
+      background-color: rgba(v.$black, 0.1);
+      color: v.$black;
+      border: none;
+      cursor: pointer;
+      @include mix.flex(row, center, center);
+      @include mix.transition(v.$transition-base);
+
+      &:hover {
+        background-color: rgba(v.$black, 0.2);
+      }
+
+      .icon {
+        width: 20px;
+        height: 20px;
+        
+        &.moon-icon {
+          display: none;
+          color: v.$neon-blue;
+        }
+
+        &.sun-icon {
+          display: block;
+          color: #f59e0b;
+        }
+      }
+    }
+
+    // CTA Button (Desktop only)
+    .btn-cta {
+      display: none;
+      
+      @include mix.respond-to-min('md-c') {
+        display: inline-flex;
+        position: relative;
+        overflow: hidden;
+        padding: 0.5rem 1.25rem;
+        font-size: map.get(v.$font-sizes, 'xs');
+        font-weight: map.get(v.$font-weights, 'bold');
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        background-color: v.$black;
+        color: v.$white;
+        border: 1px solid transparent;
+        border-radius: 2px;
         cursor: pointer;
-        width: 40px;
-        height: 40px;
-        @include mix.flex(column, center, center);
-        padding: 5px;
-        transition: all 0.3s ease;
+        @include mix.transition(all 0.3s ease);
+
+        // Shimmer Effect
+        &::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 200%;
+          height: 100%;
+          background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+          transform: skewX(-20deg) translateX(-150%);
+          transition: transform 0.5s;
+        }
 
         &:hover {
-          border-color: v.$primary;
+          background-color: v.$neon-blue;
+          color: v.$black;
+          border-color: v.$neon-blue;
+          box-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+
+          &::after {
+            transform: skewX(-20deg) translateX(150%);
+          }
         }
-
-        svg {
-          width: 22px;
-          height: 22px;
-          color: v.$primary;
-          transition: color 0.3s ease;
-        }
-      }
-
-      .moon-icon {
-        display: none;
-      }
-
-      .dark-mode {
-        .moon-icon {
-          display: block;
-        }
-
-        .sun-icon {
-          display: none;
-        }
-      }
-    }
-
-    .btn-get-quotes {
-      white-space: nowrap;
-      z-index: 1001;
-      visibility: visible;
-
-      @include mix.respond-to-max('md') {
-        visibility: hidden;
       }
     }
   }
 
+  // Mobile Menu Toggle
   .mobile-menu-toggle {
+    display: flex;
     @include mix.flex(column, center, center);
-    width: 30px;
-    height: 30px;
+    padding: 0.5rem;
     background: transparent;
     border: none;
     cursor: pointer;
     z-index: 1001;
-    position: relative;
+    border-radius: 0.375rem;
+    @include mix.transition(v.$transition-base);
+    
+    &:hover {
+      background-color: rgba(v.$black, 0.05);
+    }
 
     @include mix.respond-to-min('md-c') {
       display: none;
     }
 
-    @include mix.respond-to-max('md-c') {
-      order: 3;
-    }
-
-    .hamburger-line {
-      width: 25px;
-      height: 3px;
-      background-color: v.$white;
-      margin: 2px 0;
-      @include mix.transition(v.$transition-smooth);
-      transform-origin: center;
-
-      &:nth-child(1) {
-        @include mix.transform(translateY(0));
-      }
-
-      &:nth-child(2) {
-        opacity: 1;
-      }
-
-      &:nth-child(3) {
-        @include mix.transform(translateY(0));
-      }
-    }
-
-    &.active {
-      .hamburger-line {
-        background-color: v.$white !important;
-
-        &:nth-child(1) {
-          @include mix.transform(translateY(7px) rotate(45deg));
-        }
-
-        &:nth-child(2) {
-          opacity: 0;
-        }
-
-        &:nth-child(3) {
-          @include mix.transform(translateY(-7px) rotate(-45deg));
-        }
-      }
+    .icon {
+      width: 24px;
+      height: 24px;
+      color: #475569;  // Slate 600
     }
   }
+}
 
-  &.header-transparent {
-    background-color: transparent;
-    @include mix.transition(all 0.4s);
-  }
-
-  &.header-scrolled {
-    background-color: #161b22;
-    @include mix.box-shadow(v.$box-shadow);
-    @include mix.transition(all 0.4s);
-
-    .mobile-menu-toggle .hamburger-line {
-      background-color: v.$black;
+// ==========================================================================
+// DARK MODE OVERRIDES
+// ==========================================================================
+body.dark-mode {
+  .header {
+    background-color: rgba(v.$background, 0.5);  // Dark background by default
+    
+    // Glassmorphism effect for dark mode
+    &.glass-nav {
+      background: rgba(v.$background, 0.9);
+      border-bottom: 1px solid rgba(v.$white, 0.1);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
     }
-
-    .navbar .nav-menu .nav-link {
+    
+    // Logo filters
+    .logo .logo-image {
+      filter: brightness(1.1) drop-shadow(0 0 8px rgba(0, 243, 255, 0.3));
+    }
+    
+    // Navigation links
+    .nav-link {
+      color: #9ca3af;
+      
       &:hover, &.active {
-        color: v.$primary;
+        color: v.$neon-blue;
       }
     }
-
-    .navbar .nav-menu .dropdown .dropdown-toggle {
+    
+    // Mobile menu
+    .navbar-mobile {
+      background: rgba(v.$background, 0.95);
+      border-bottom: 1px solid rgba(v.$white, 0.1);
+      
+      .nav-link {
+        color: #9ca3af;
+        border-bottom: 1px solid rgba(v.$white, 0.1);
+      }
+    }
+    
+    // Theme toggle button
+    .theme-toggle {
+      background-color: rgba(v.$white, 0.1);
+      color: v.$white;
+      
       &:hover {
-        color: v.$primary;
+        background-color: rgba(v.$white, 0.2);
+      }
+      
+      .moon-icon {
+        display: block;
+      }
+      
+      .sun-icon {
+        display: none;
       }
     }
+    
+    // CTA Button
+    .btn-cta {
+      background-color: rgba(v.$white, 0.05);
+      border-color: rgba(v.$white, 0.1);
+      
+      &:hover {
+        background-color: v.$neon-blue;
+        color: v.$black;
+        border-color: v.$neon-blue;
+      }
+    }
+    
+    // Mobile toggle icon
+    .mobile-menu-toggle {
+      &:hover {
+        background-color: rgba(v.$white, 0.1);
+      }
+      
+      .icon {
+        color: #9ca3af;
+      }
+    }
+  }
+}
+
+// Animación Pulse Slow
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
   }
 }

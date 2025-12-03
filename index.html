@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindLogic</title>
+    
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Iconos Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- CSS Compilado -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body class="dark-mode">
+
+    <!-- HEADER / NAVBAR -->
+    <header class="header">
+        <div class="container">
+            
+            <!-- Logo -->
+            <a href="/" class="logo">
+                <img src="./assets/images/logo/mindlogic-logo.png" alt="MindLogic" class="logo-image">
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <div class="nav-desktop">
+                <nav class="navbar">
+                    <ul class="nav-menu">
+                        <li><a href="#soluciones" class="nav-link">Soluciones</a></li>
+                        <li><a href="#precios" class="nav-link">Precios</a></li>
+                        <li><a href="#servicios" class="nav-link">Servicios</a></li>
+                    </ul>
+                </nav>
+            </div>
+            
+            <!-- Actions (Theme Toggle + CTA) -->
+            <div class="actions">
+                <button class="theme-toggle" aria-label="Toggle theme">
+                    <i data-lucide="moon" class="icon moon-icon"></i>
+                    <i data-lucide="sun" class="icon sun-icon"></i>
+                </button>
+                
+                <button class="btn-cta">
+                    Comprar Ahora
+                </button>
+            </div>
+            
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <i data-lucide="menu" class="icon"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <nav class="navbar navbar-mobile">
+            <ul class="nav-menu">
+                <li><a href="#solutions" class="nav-link">Solutions</a></li>
+                <li><a href="#pricing" class="nav-link">Pricing</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+            </ul>
+            
+            <!-- Mobile CTA Button -->
+            <div class="cta-mobile-wrapper">
+                <button class="btn-cta" style="width: 100%; display: flex; justify-content: center;">
+                    Comprar Ahora
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-container">
+                <!-- Content Left -->
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Technology Solutions Excellence
+                    </h1>
+                    <h2 class="hero-subtitle">
+                        In Mobile App Development
+                    </h2>
+                    <p class="hero-description">
+                        Helping you grow through strategy, creativity and technology.
+                    </p>
+                    
+                    <!-- Social Icons -->
+                    <div class="hero-social">
+                        <a href="#" class="btn-icon btn-social btn-x" aria-label="X">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4l11.733 16h4.267l-11.733 -16z"/>
+                                <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="btn-icon btn-social btn-facebook" aria-label="Facebook">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="btn-icon btn-social btn-linkedin" aria-label="LinkedIn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                                <rect x="2" y="9" width="4" height="12"/>
+                                <circle cx="4" cy="4" r="2"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="btn-icon btn-social btn-instagram" aria-label="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    <!-- CTA Buttons -->
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary">Get Quotes</button>
+                        <button class="btn btn-outline">Get Started</button>
+                    </div>
+                </div>
+                
+                <!-- Image Right -->
+                <div class="hero-image">
+                    <img src="./assets/images/home/robotic-brain.png" alt="Robotic Brain" class="brain-image">
+                    <div class="brain-glow"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="./assets/js/navbar.js"></script>
+    <script>
+        // Inicializar iconos de Lucide
+        lucide.createIcons();
+    </script>
+</body>
+</html>
+
