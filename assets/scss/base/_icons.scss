@@ -32,31 +32,85 @@
 }
 
 // Predefined sizes
-.sm svg { width: 24px; height: 24px; }
-.md svg { width: 48px; height: 48px; }
-.lg svg { width: 64px; height: 64px; }
-.xl svg { width: 77px; height: 77px; }
-.xxl svg { width: 100px; height: 100px; }
+.sm svg {
+    width: 24px;
+    height: 24px;
+}
+
+.md svg {
+    width: 48px;
+    height: 48px;
+}
+
+.lg svg {
+    width: 64px;
+    height: 64px;
+}
+
+.xl svg {
+    width: 77px;
+    height: 77px;
+}
+
+.xxl svg {
+    width: 100px;
+    height: 100px;
+}
 
 // Predefined colors
 
 // Primary colors
-.primary svg        { color: v.$primary; }
-.primary-light svg  { color: v.$primary-light; }
-.primary-dark svg   { color: v.$primary-dark; }
+.primary svg {
+    color: v.$primary;
+}
+
+.primary-light svg {
+    color: v.$primary-light;
+}
+
+.primary-dark svg {
+    color: v.$primary-dark;
+}
 
 // Secondary colors
-.secondary svg      { color: map.get(map.get(v.$colors, 'secondary'), 'base'); }
-.secondary-light svg{ color: v.$white; }
-.secondary-dark svg { color: map.get(map.get(v.$colors, 'secondary'), 'dark'); }
+.secondary svg {
+    color: map.get(map.get(v.$colors, 'secondary'), 'base');
+}
+
+.secondary-light svg {
+    color: v.$white;
+}
+
+.secondary-dark svg {
+    color: map.get(map.get(v.$colors, 'secondary'), 'dark');
+}
 
 // Neutral colors
-.neutral-light svg  { color: map.get(map.get(v.$colors, 'neutral'), 'light'); }
-.neutral-base svg   { color: v.$gray; }
-.neutral-dark svg   { color: v.$dark-gray; }
-.neutral-darker svg { color: v.$black; }
+.neutral-light svg {
+    color: map.get(map.get(v.$colors, 'neutral'), 'light');
+}
+
+.neutral-base svg {
+    color: v.$gray;
+}
+
+.neutral-dark svg {
+    color: v.$dark-gray;
+}
+
+.neutral-darker svg {
+    color: v.$black;
+}
 
 // Basic colors
-.white svg          { color: v.$white; }
-.gray svg           { color: v.$gray; }
-.black svg          { color: v.$black; }
+.white svg {
+    color: v.$white;
+}
+
+.gray svg {
+    color: v.$gray;
+}
+
+.black svg {
+    color: v.$black;
+}

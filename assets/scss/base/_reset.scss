@@ -7,7 +7,9 @@
 @use 'sass:color';
 
 // Box sizing, margins, and padding
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -39,7 +41,7 @@ a {
   text-decoration: none;
   background-color: transparent;
   transition: v.$transition-base;
-  
+
   &:hover {
     color: color.scale(v.$primary, $lightness: -15%);
     text-decoration: none;
@@ -47,32 +49,40 @@ a {
 }
 
 // Images
-img, svg {
+img,
+svg {
   vertical-align: middle;
   max-width: 100%;
   height: auto;
 }
 
 // Lists
-ul, ol {
+ul,
+ol {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
 // Form elements
-button, input, optgroup, select, textarea {
+button,
+input,
+optgroup,
+select,
+textarea {
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
   margin: 0;
 }
 
-button, input {
+button,
+input {
   overflow: visible;
 }
 
-button, select {
+button,
+select {
   text-transform: none;
 }
 

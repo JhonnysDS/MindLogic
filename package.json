@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "live-server": "^1.2.2",
+    "sass": "^1.89.0"
+  },
+  "scripts": {
+    "scss": "sass assets/scss/main.scss assets/css/style.css --watch",
+    "prefix": "postcss assets/css/style.css --replace --use autoprefixer",
+    "build": "sass assets/scss/main.scss assets/css/style.css --style=compressed && postcss assets/css/style.css --replace --use autoprefixer",
+    "dev": "live-server"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "> 1%"
+  ],
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.4",
+    "postcss-cli": "^11.0.1",
+    "svg-sprite": "^2.0.4"
+  }
+}
