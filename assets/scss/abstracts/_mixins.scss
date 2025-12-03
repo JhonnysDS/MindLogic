@@ -560,3 +560,12 @@
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
 }
+
+// Dark mode mixin - Works with both html.dark-mode and body.dark-mode
+@mixin dark-mode {
+  :root.dark-mode &,
+  html.dark-mode &,
+  body.dark-mode & {
+    @content;
+  }
+}

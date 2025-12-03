@@ -19,6 +19,15 @@ html {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   scroll-behavior: smooth;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark-mode {
+  color-scheme: dark;
+}
+
+html:not(.dark-mode) {
+  color-scheme: light;
 }
 
 body {
@@ -27,8 +36,8 @@ body {
   font-size: map.get(v.$font-sizes, 'base');
   font-weight: map.get(v.$font-weights, 'regular');
   line-height: 1.6;
-  color: #0f172a;  // Slate 900 - Light mode text
-  background-color: #f8fafc;  // Slate 50 - Light mode background
+  color: #1e293b;  // Slate 800 - Better contrast in light mode
+  background-color: #ffffff;  // Pure white - Light mode background
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;

@@ -99,6 +99,15 @@ html {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   scroll-behavior: smooth;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark-mode {
+  color-scheme: dark;
+}
+
+html:not(.dark-mode) {
+  color-scheme: light;
 }
 
 body {
@@ -107,8 +116,8 @@ body {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.6;
-  color: #0f172a;
-  background-color: #f8fafc;
+  color: #1e293b;
+  background-color: #ffffff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -11621,7 +11630,8 @@ body.dark-mode .btn-social.btn-github:hover svg {
   padding: 0;
   z-index: 800;
   height: 80px;
-  background-color: rgba(248, 250, 252, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(8px);
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -ms-transition: all 0.5s ease;
@@ -11629,10 +11639,10 @@ body.dark-mode .btn-social.btn-github:hover svg {
   transition: all 0.5s ease;
 }
 .header.glass-nav {
-  background: rgba(248, 250, 252, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.1);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
 }
 .header .container {
   position: relative;
@@ -12082,57 +12092,75 @@ body.dark-mode .btn-social.btn-github:hover svg {
   color: #475569;
 }
 
-body.dark-mode .header {
-  background-color: rgba(2, 6, 23, 0.5);
+body.dark-mode .header,
+html.dark-mode .header {
+  background-color: rgba(2, 6, 23, 0.6);
+  backdrop-filter: blur(8px);
 }
-body.dark-mode .header.glass-nav {
-  background: rgba(2, 6, 23, 0.9);
+body.dark-mode .header.glass-nav,
+html.dark-mode .header.glass-nav {
+  background: rgba(2, 6, 23, 0.95);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
 }
-body.dark-mode .header .logo .logo-image {
+body.dark-mode .header .logo .logo-image,
+html.dark-mode .header .logo .logo-image {
   filter: brightness(1.1) drop-shadow(0 0 8px rgba(0, 243, 255, 0.3));
 }
-body.dark-mode .header .nav-link {
+body.dark-mode .header .nav-link,
+html.dark-mode .header .nav-link {
   color: #9ca3af;
 }
-body.dark-mode .header .nav-link:hover, body.dark-mode .header .nav-link.active {
+body.dark-mode .header .nav-link:hover, body.dark-mode .header .nav-link.active,
+html.dark-mode .header .nav-link:hover,
+html.dark-mode .header .nav-link.active {
   color: #00f3ff;
 }
-body.dark-mode .header .navbar-mobile {
+body.dark-mode .header .navbar-mobile,
+html.dark-mode .header .navbar-mobile {
   background: rgba(2, 6, 23, 0.95);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-body.dark-mode .header .navbar-mobile .nav-link {
+body.dark-mode .header .navbar-mobile .nav-link,
+html.dark-mode .header .navbar-mobile .nav-link {
   color: #9ca3af;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-body.dark-mode .header .theme-toggle {
+body.dark-mode .header .theme-toggle,
+html.dark-mode .header .theme-toggle {
   background-color: rgba(255, 255, 255, 0.1);
   color: #ffffff;
 }
-body.dark-mode .header .theme-toggle:hover {
+body.dark-mode .header .theme-toggle:hover,
+html.dark-mode .header .theme-toggle:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
-body.dark-mode .header .theme-toggle .moon-icon {
+body.dark-mode .header .theme-toggle .moon-icon,
+html.dark-mode .header .theme-toggle .moon-icon {
   display: block;
 }
-body.dark-mode .header .theme-toggle .sun-icon {
+body.dark-mode .header .theme-toggle .sun-icon,
+html.dark-mode .header .theme-toggle .sun-icon {
   display: none;
 }
-body.dark-mode .header .btn-cta {
+body.dark-mode .header .btn-cta,
+html.dark-mode .header .btn-cta {
   background-color: rgba(255, 255, 255, 0.05);
   border-color: rgba(255, 255, 255, 0.1);
 }
-body.dark-mode .header .btn-cta:hover {
+body.dark-mode .header .btn-cta:hover,
+html.dark-mode .header .btn-cta:hover {
   background-color: #00f3ff;
   color: #0f172a;
   border-color: #00f3ff;
 }
-body.dark-mode .header .mobile-menu-toggle:hover {
+body.dark-mode .header .mobile-menu-toggle:hover,
+html.dark-mode .header .mobile-menu-toggle:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
-body.dark-mode .header .mobile-menu-toggle .icon {
+body.dark-mode .header .mobile-menu-toggle .icon,
+html.dark-mode .header .mobile-menu-toggle .icon {
   color: #9ca3af;
 }
 
@@ -15384,20 +15412,37 @@ body {
   flex-wrap: nowrap;
   padding: 120px 1.5rem 4rem;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  transition: background 0.3s ease;
 }
-.hero-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(circle at 20% 50%, rgba(0, 243, 255, 0.03) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(189, 0, 255, 0.03) 0%, transparent 50%);
-  z-index: 0;
-  animation: pulse-bg 8s ease-in-out infinite;
+:root.dark-mode .hero-section, html.dark-mode .hero-section, body.dark-mode .hero-section {
+  background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
 }
 @media (max-width: 1025px) {
   .hero-section {
     min-height: auto;
     padding: 100px 1rem 3rem;
+  }
+}
+
+.particles-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+:root.dark-mode .particles-canvas, html.dark-mode .particles-canvas, body.dark-mode .particles-canvas {
+  opacity: 0.7;
+}
+@media (max-width: 1025px) {
+  .particles-canvas {
+    opacity: 0.2;
   }
 }
 
@@ -15481,8 +15526,10 @@ body {
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 1rem;
+  color: #1e293b;
+  transition: color 0.3s ease;
 }
-body.dark-mode .hero-title {
+:root.dark-mode .hero-title, html.dark-mode .hero-title, body.dark-mode .hero-title {
   color: #ffffff;
 }
 
@@ -15496,15 +15543,17 @@ body.dark-mode .hero-title {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  color: transparent;
 }
 
 .hero-description {
   font-size: 1.125rem;
   line-height: 1.6;
   margin-bottom: 3rem;
-  color: #475569;
+  color: #64748b;
+  transition: color 0.3s ease;
 }
-body.dark-mode .hero-description {
+:root.dark-mode .hero-description, html.dark-mode .hero-description, body.dark-mode .hero-description {
   color: #9ca3af;
 }
 
@@ -15606,30 +15655,33 @@ body.dark-mode .hero-description {
   -moz-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
-  max-width: 600px;
+  max-width: 750px;
+  padding: 4rem;
 }
 @media (max-width: 1025px) {
   .hero-image {
     max-width: 100%;
     width: 100%;
+    padding: 1.5rem;
   }
 }
 
 .brain-image {
   width: 100%;
   height: auto;
-  max-width: 500px;
+  max-width: 700px;
   position: relative;
   z-index: 2;
   animation: float 6s ease-in-out infinite;
-  filter: drop-shadow(0 20px 40px rgba(0, 243, 255, 0.3));
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.15));
+  transition: filter 0.3s ease;
 }
-body.dark-mode .brain-image {
+:root.dark-mode .brain-image, html.dark-mode .brain-image, body.dark-mode .brain-image {
   filter: drop-shadow(0 20px 60px rgba(0, 243, 255, 0.5));
 }
 @media (max-width: 1024px) {
   .brain-image {
-    max-width: 350px;
+    max-width: 450px;
   }
 }
 
@@ -15638,13 +15690,15 @@ body.dark-mode .brain-image {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
-  height: 80%;
-  background: radial-gradient(circle, rgba(0, 243, 255, 0.2) 0%, transparent 70%);
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(100, 116, 139, 0.15) 0%, transparent 70%);
   z-index: 1;
   animation: pulse-glow 4s ease-in-out infinite;
+  pointer-events: none;
+  transition: background 0.3s ease;
 }
-body.dark-mode .brain-glow {
+:root.dark-mode .brain-glow, html.dark-mode .brain-glow, body.dark-mode .brain-glow {
   background: radial-gradient(circle, rgba(0, 243, 255, 0.3) 0%, rgba(189, 0, 255, 0.1) 50%, transparent 70%);
 }
 

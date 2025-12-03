@@ -14,35 +14,38 @@
     const html = document.documentElement;
     const themeToggles = document.querySelectorAll('.theme-toggle');
     
-    // Check for saved theme preference or default to 'dark'
-    const savedTheme = localStorage.getItem('theme') || 'dark';
+    // Apply theme function
+    const applyTheme = (theme) => {
+      if (theme === 'dark') {
+        html.classList.add('dark-mode');
+        body.classList.add('dark-mode');
+        localStorage.theme = 'dark';
+      } else {
+        html.classList.remove('dark-mode');
+        body.classList.remove('dark-mode');
+        localStorage.theme = 'light';
+      }
+      
+      // Trigger custom event for other scripts (like particles)
+      document.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
+    };
     
-    console.log('Initializing theme:', savedTheme);
-    
-    if (savedTheme === 'dark') {
+    // Initial theme is already set by inline script in head
+    // We just need to ensure body has the class if html has it
+    if (html.classList.contains('dark-mode') && !body.classList.contains('dark-mode')) {
       body.classList.add('dark-mode');
-      html.classList.add('dark-mode');
-    } else {
-      body.classList.remove('dark-mode');
-      html.classList.remove('dark-mode');
     }
 
     // Toggle theme on button click
     themeToggles.forEach(toggle => {
       toggle.addEventListener('click', (e) => {
         e.preventDefault();
-        body.classList.toggle('dark-mode');
-        html.classList.toggle('dark-mode');
         
-        // Save preference
-        const currentTheme = body.classList.contains('dark-mode') ? 'dark' : 'light';
-        localStorage.setItem('theme', currentTheme);
-        
-        console.log('Theme changed to:', currentTheme);
+        // Toggle and apply
+        const newTheme = html.classList.contains('dark-mode') ? 'light' : 'dark';
+        applyTheme(newTheme);
       });
     });
-    
-    console.log('Theme toggle initialized. Buttons found:', themeToggles.length);
   };
 
   // ==========================================================================

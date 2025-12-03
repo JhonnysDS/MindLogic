@@ -10,23 +10,40 @@
   @include mix.flex(row, center, center);
   padding: 120px map.get(v.$spacers, 4) map.get(v.$spacers, 6);
   position: relative;
-  overflow: hidden;
-  
-  // Animated background pattern
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: 
-      radial-gradient(circle at 20% 50%, rgba(0, 243, 255, 0.03) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(189, 0, 255, 0.03) 0%, transparent 50%);
-    z-index: 0;
-    animation: pulse-bg 8s ease-in-out infinite;
+  overflow: visible;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  transition: background 0.3s ease;
+
+  @include mix.dark-mode {
+    background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
   }
 
   @include mix.respond-to-max('md-c') {
     min-height: auto;
     padding: 100px map.get(v.$spacers, 3) map.get(v.$spacers, 5);
+  }
+}
+
+// ==========================================================================
+// PARTICLES CANVAS
+// ==========================================================================
+.particles-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+
+  @include mix.dark-mode {
+    opacity: 0.7;
+  }
+
+  @include mix.respond-to-max('md-c') {
+    opacity: 0.2;
   }
 }
 
@@ -63,8 +80,10 @@
   font-weight: map.get(v.$font-weights, 'bold');
   line-height: 1.2;
   margin-bottom: map.get(v.$spacers, 3);
+  color: #1e293b;  // Slate 800 - More visible in light mode
+  transition: color 0.3s ease;
   
-  body.dark-mode & {
+  @include mix.dark-mode {
     color: v.$white;
   }
 }
@@ -79,15 +98,17 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  color: transparent;  // Fallback
 }
 
 .hero-description {
   font-size: map.get(v.$font-sizes, 'lg');
   line-height: 1.6;
   margin-bottom: map.get(v.$spacers, 5);
-  color: #475569;
+  color: #64748b;  // Slate 500 - Better visibility in light mode
+  transition: color 0.3s ease;
   
-  body.dark-mode & {
+  @include mix.dark-mode {
     color: #9ca3af;
   }
 }
@@ -122,29 +143,32 @@
   flex: 1;
   position: relative;
   @include mix.flex(row, center, center);
-  max-width: 600px;
+  max-width: 750px;
+  padding: map.get(v.$spacers, 6);
 
   @include mix.respond-to-max('md-c') {
     max-width: 100%;
     width: 100%;
+    padding: map.get(v.$spacers, 4);
   }
 }
 
 .brain-image {
   width: 100%;
   height: auto;
-  max-width: 500px;
+  max-width: 700px;
   position: relative;
   z-index: 2;
   animation: float 6s ease-in-out infinite;
-  filter: drop-shadow(0 20px 40px rgba(0, 243, 255, 0.3));
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.15));
+  transition: filter 0.3s ease;
 
-  body.dark-mode & {
+  @include mix.dark-mode {
     filter: drop-shadow(0 20px 60px rgba(0, 243, 255, 0.5));
   }
 
   @include mix.respond-to-max('md') {
-    max-width: 350px;
+    max-width: 450px;
   }
 }
 
@@ -153,13 +177,15 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80%;
-  height: 80%;
-  background: radial-gradient(circle, rgba(0, 243, 255, 0.2) 0%, transparent 70%);
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(100, 116, 139, 0.15) 0%, transparent 70%);
   z-index: 1;
   animation: pulse-glow 4s ease-in-out infinite;
+  pointer-events: none;
+  transition: background 0.3s ease;
   
-  body.dark-mode & {
+  @include mix.dark-mode {
     background: radial-gradient(circle, rgba(0, 243, 255, 0.3) 0%, rgba(189, 0, 255, 0.1) 50%, transparent 70%);
   }
 }

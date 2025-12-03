@@ -5,6 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MindLogic</title>
     
+    <!-- Theme Initialization - MUST BE FIRST to prevent flash -->
+    <script>
+        // Ejecutar ANTES de que cargue cualquier cosa
+        (function() {
+            const html = document.documentElement;
+            const body = document.body;
+            
+            // Check localStorage OR system preference
+            if (
+                localStorage.theme === 'dark' || 
+                (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+            ) {
+                html.classList.add('dark-mode');
+                // Body class will be added after body loads
+                document.addEventListener('DOMContentLoaded', () => {
+                    body.classList.add('dark-mode');
+                });
+            } else {
+                html.classList.remove('dark-mode');
+            }
+        })();
+    </script>
+    
     <!-- Fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +39,7 @@
     <!-- CSS Compilado -->
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
-<body class="dark-mode">
+<body>
 
     <!-- HEADER / NAVBAR -->
     <header class="header">
@@ -77,6 +100,9 @@
     <main>
         <!-- Hero Section -->
         <section class="hero-section">
+            <!-- Particles Background -->
+            <canvas id="particles-canvas" class="particles-canvas"></canvas>
+            
             <div class="hero-container">
                 <!-- Content Left -->
                 <div class="hero-content">
@@ -137,6 +163,7 @@
 
     <!-- JavaScript -->
     <script src="./assets/js/navbar.js"></script>
+    <script src="./assets/js/particles.js"></script>
     <script>
         // Inicializar iconos de Lucide
         lucide.createIcons();

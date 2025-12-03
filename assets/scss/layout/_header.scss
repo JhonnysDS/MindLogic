@@ -14,15 +14,16 @@
   padding: 0;
   z-index: map.get(v.$z-indices, 'navbar');   // High z-index to stay above content
   height: 80px;
-  background-color: rgba(v.$light-gray, 0.5);  // Light background by default
+  background-color: rgba(255, 255, 255, 0.5);  // White semi-transparent by default
+  backdrop-filter: blur(8px);
   @include mix.transition(all 0.5s ease);
   
   // Glassmorphism effect when scrolled
   &.glass-nav {
-    background: rgba(v.$light-gray, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(v.$black, 0.1);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
   }
 
   .container {
@@ -297,81 +298,82 @@
 // ==========================================================================
 // DARK MODE OVERRIDES
 // ==========================================================================
-body.dark-mode {
-  .header {
-    background-color: rgba(v.$background, 0.5);  // Dark background by default
+body.dark-mode .header,
+html.dark-mode .header {
+  background-color: rgba(v.$background, 0.6);  // Dark background by default
+  backdrop-filter: blur(8px);
+  
+  // Glassmorphism effect for dark mode
+  &.glass-nav {
+    background: rgba(v.$background, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(v.$white, 0.1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  }
+  
+  // Logo filters
+  .logo .logo-image {
+    filter: brightness(1.1) drop-shadow(0 0 8px rgba(0, 243, 255, 0.3));
+  }
+  
+  // Navigation links
+  .nav-link {
+    color: #9ca3af;
     
-    // Glassmorphism effect for dark mode
-    &.glass-nav {
-      background: rgba(v.$background, 0.9);
-      border-bottom: 1px solid rgba(v.$white, 0.1);
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    &:hover, &.active {
+      color: v.$neon-blue;
     }
+  }
+  
+  // Mobile menu
+  .navbar-mobile {
+    background: rgba(v.$background, 0.95);
+    border-bottom: 1px solid rgba(v.$white, 0.1);
     
-    // Logo filters
-    .logo .logo-image {
-      filter: brightness(1.1) drop-shadow(0 0 8px rgba(0, 243, 255, 0.3));
-    }
-    
-    // Navigation links
     .nav-link {
       color: #9ca3af;
-      
-      &:hover, &.active {
-        color: v.$neon-blue;
-      }
-    }
-    
-    // Mobile menu
-    .navbar-mobile {
-      background: rgba(v.$background, 0.95);
       border-bottom: 1px solid rgba(v.$white, 0.1);
-      
-      .nav-link {
-        color: #9ca3af;
-        border-bottom: 1px solid rgba(v.$white, 0.1);
-      }
+    }
+  }
+  
+  // Theme toggle button
+  .theme-toggle {
+    background-color: rgba(v.$white, 0.1);
+    color: v.$white;
+    
+    &:hover {
+      background-color: rgba(v.$white, 0.2);
     }
     
-    // Theme toggle button
-    .theme-toggle {
+    .moon-icon {
+      display: block;
+    }
+    
+    .sun-icon {
+      display: none;
+    }
+  }
+  
+  // CTA Button
+  .btn-cta {
+    background-color: rgba(v.$white, 0.05);
+    border-color: rgba(v.$white, 0.1);
+    
+    &:hover {
+      background-color: v.$neon-blue;
+      color: v.$black;
+      border-color: v.$neon-blue;
+    }
+  }
+  
+  // Mobile toggle icon
+  .mobile-menu-toggle {
+    &:hover {
       background-color: rgba(v.$white, 0.1);
-      color: v.$white;
-      
-      &:hover {
-        background-color: rgba(v.$white, 0.2);
-      }
-      
-      .moon-icon {
-        display: block;
-      }
-      
-      .sun-icon {
-        display: none;
-      }
     }
     
-    // CTA Button
-    .btn-cta {
-      background-color: rgba(v.$white, 0.05);
-      border-color: rgba(v.$white, 0.1);
-      
-      &:hover {
-        background-color: v.$neon-blue;
-        color: v.$black;
-        border-color: v.$neon-blue;
-      }
-    }
-    
-    // Mobile toggle icon
-    .mobile-menu-toggle {
-      &:hover {
-        background-color: rgba(v.$white, 0.1);
-      }
-      
-      .icon {
-        color: #9ca3af;
-      }
+    .icon {
+      color: #9ca3af;
     }
   }
 }
