@@ -1,87 +1,278 @@
+// ================================================
+// UTILITIES
+// ================================================
+
+@use 'sass:map';
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins' as mix;
-@use 'sass:map';
 
-// ... (Existing spacing/utility classes)
-
-// ==========================================================================
-// EFFECTS & ANIMATIONS
-// ==========================================================================
-
-// Glassmorphism
-.glass-clean {
-  @include mix.glassmorphism('light');
+// Spacing utilities
+@each $key, $value in v.$spacers {
+  .mt-#{$key} { margin-top: $value !important; }
+  .mb-#{$key} { margin-bottom: $value !important; }
+  .ml-#{$key} { margin-left: $value !important; }
+  .mr-#{$key} { margin-right: $value !important; }
+  .mx-#{$key} { 
+    margin-left: $value !important;
+    margin-right: $value !important;
+  }
+  .my-#{$key} { 
+    margin-top: $value !important;
+    margin-bottom: $value !important;
+  }
+  .m-#{$key} { margin: $value !important; }
+  
+  .pt-#{$key} { padding-top: $value !important; }
+  .pb-#{$key} { padding-bottom: $value !important; }
+  .pl-#{$key} { padding-left: $value !important; }
+  .pr-#{$key} { padding-right: $value !important; }
+  .px-#{$key} { 
+    padding-left: $value !important;
+    padding-right: $value !important;
+  }
+  .py-#{$key} { 
+    padding-top: $value !important;
+    padding-bottom: $value !important;
+  }
+  .p-#{$key} { padding: $value !important; }
 }
 
-.glass-cyber {
-  @include mix.glassmorphism('dark');
+// Auto margins
+.mx-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
-// Neon Glow
-.neon-glow {
-  @include mix.neon-glow(v.$primary);
+.ml-auto { margin-left: auto !important; }
+.mr-auto { margin-right: auto !important; }
 
-  &:hover {
-    @include mix.neon-glow(v.$primary-light);
+// Display utilities (keeping only basic display, flex/grid moved to their own files)
+.d-none { display: none !important; }
+.d-inline { display: inline !important; }
+.d-inline-block { display: inline-block !important; }
+.d-block { display: block !important; }
+
+// Container classes
+.container {
+  width: 100%;
+  padding-right: map.get(v.$spacers, 2);
+  padding-left: map.get(v.$spacers, 2);
+  margin-right: auto;
+  margin-left: auto;
+  
+  @include mix.respond-to-min('xl') {
+    max-width: 1296px;
+  }
+
+  @include mix.respond-to-max('md') {
+    padding-right: map.get(v.$spacers, 4);
+    padding-left: map.get(v.$spacers, 4);
   }
 }
 
-// Animations
-@keyframes float {
+.container-fluid {
+  width: 100%;
+  padding-right: map.get(v.$spacers, 3);
+  padding-left: map.get(v.$spacers, 3);
+  margin-right: auto;
+  margin-left: auto;
+}
 
-  0%,
-  100% {
-    transform: translateY(0);
+// Position utilities
+.position-relative { position: relative !important; }
+.position-absolute { position: absolute !important; }
+.position-fixed { position: fixed !important; }
+.position-sticky { position: sticky !important; }
+
+// Position placement utilities
+.top-0 { top: 0 !important; }
+.top-50 { top: 50% !important; }
+.bottom-0 { bottom: 0 !important; }
+.left-0 { left: 0 !important; }
+.left-50 { left: 50% !important; }
+.right-0 { right: 0 !important; }
+
+// Position spacing utilities
+@each $key, $value in v.$spacers {
+  .top-#{$key} { top: $value !important; }
+  .bottom-#{$key} { bottom: $value !important; }
+  .left-#{$key} { left: $value !important; }
+  .right-#{$key} { right: $value !important; }
+}
+
+// Transform utilities
+.translate-center {
+  transform: translate(-50%, -50%) !important;
+}
+.translate-x-center {
+  transform: translateX(-50%) !important;
+}
+.translate-y-center {
+  transform: translateY(-50%) !important;
+}
+
+// Common positioned links
+.overlay-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+// Text utilities
+.text-truncate {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+// Background utilities
+.bg-primary { background-color: v.$primary !important; }
+.bg-light { background-color: v.$light-gray !important; }
+.bg-white { background-color: v.$white !important; }
+.bg-dark { background-color: v.$primary-dark !important; }
+.bg-transparent { background-color: transparent !important; }
+.bg-gradient {
+  background: v.$primary-gradient !important;
+}
+
+// Section spacing
+.section {
+  padding: map.get(v.$spacers, 5) 0;
+}
+
+// Z-index utilities
+.z-high { z-index: map.get(v.$z-indices, 'modal') !important; }
+.z-medium { z-index: map.get(v.$z-indices, 'navbar') !important; }
+.z-low { z-index: map.get(v.$z-indices, 'default') !important; }
+
+// Responsive visibility utilities (basic display only)
+@each $breakpoint, $value in v.$breakpoints {
+  @include mix.respond-to-min($breakpoint) {
+    .d-#{$breakpoint}-none { display: none !important; }
+    .d-#{$breakpoint}-block { display: block !important; }
+    .d-#{$breakpoint}-inline { display: inline !important; }
+    .d-#{$breakpoint}-inline-block { display: inline-block !important; }
   }
+}
 
-  50% {
-    transform: translateY(-10px);
+// Shadow utilities
+.shadow-sm { box-shadow: v.$box-shadow-sm !important; }
+.shadow { box-shadow: v.$box-shadow !important; }
+.shadow-lg { box-shadow: v.$box-shadow-lg !important; }
+.shadow-none { box-shadow: none !important; }
+
+// Border utilities
+.border { border: 1px solid v.$light-gray !important; }
+.border-top { border-top: 1px solid v.$light-gray !important; }
+.border-right { border-right: 1px solid v.$light-gray !important; }
+.border-bottom { border-bottom: 1px solid v.$light-gray !important; }
+.border-left { border-left: 1px solid v.$light-gray !important; }
+.border-0 { border: 0 !important; }
+
+// Border colors
+.border-primary { border-color: v.$primary !important; }
+.border-white { border-color: v.$white !important; }
+.border-dark { border-color: v.$dark-gray !important; }
+
+// Border radius utilities
+.rounded { border-radius: v.$border-radius !important; }
+.rounded-sm { border-radius: v.$border-radius-sm !important; }
+.rounded-lg { border-radius: v.$border-radius-lg !important; }
+.rounded-circle { border-radius: 50% !important; }
+.rounded-0 { border-radius: 0 !important; }
+
+// Width and height utilities
+$sizes: ();
+
+@for $i from 1 through 100 {
+  $sizes: map.merge($sizes, ($i: $i * 1%));
+}
+
+@mixin size-utilities($property, $prefix) {
+  @each $key, $value in $sizes {
+    .#{$prefix}-#{$key} { #{$property}: $value !important; }
+  }
+  .#{$prefix}-auto { #{$property}: auto !important; }
+}
+
+@include size-utilities('width', 'w');
+@include size-utilities('max-width', 'max-w');
+@include size-utilities('height', 'h');
+@include size-utilities('max-height', 'max-h');
+
+// Overflow utilities
+.overflow-hidden { overflow: hidden !important; }
+.overflow-visible { overflow: visible !important; }
+.overflow-auto { overflow: auto !important; }
+.overflow-scroll { overflow: scroll !important; }
+.overflow-y { overflow: hidden !important; overflow-y: auto !important; }
+.overflow-x { overflow: hidden !important; overflow-x: auto !important; }
+
+// Cursor utilities
+.cursor-pointer { cursor: pointer !important; }
+.cursor-default { cursor: default !important; }
+.cursor-not-allowed { cursor: not-allowed !important; }
+
+// Visibility utilities
+.visible { visibility: visible !important; }
+.invisible { visibility: hidden !important; }
+
+// ===== Text Shadow Utilities =====
+
+// --- Dark Shadows (for light text on dark backgrounds) ---
+$dark-text-shadows: (
+  'default': 1px 1px 3px rgba(0, 0, 0, 0.6),
+  'strong':  2px 2px 8px rgba(0, 0, 0, 0.75),
+  'intense': 4px 4px 12px rgba(0, 0, 0, 0.8),
+  
+  // CORREGIDO: Valor envuelto en paréntesis para tratarlo como una sola lista.
+  'epic':    (0 4px 10px rgba(0,0,0,0.6), 0 8px 25px rgba(0,0,0,0.8)),
+  
+  'glow':    0 0 15px rgba(0, 0, 0, 0.9),
+  'hard':    3px 3px 0px #1a1a1a
+);
+
+// Generate base .text-shadow class
+.text-shadow {
+  text-shadow: map.get($dark-text-shadows, 'default');
+}
+
+// Generate all dark shadow modifier classes
+@each $name, $value in $dark-text-shadows {
+  @if $name != 'default' {
+    .text-shadow--#{$name} {
+      text-shadow: $value;
+    }
   }
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
 
-@keyframes pulse-slow {
+// --- Light Effects & White Shadows (for dark text on light backgrounds) ---
+$soft-light-text-effects: (
+  // Softer glow with less blur and opacity.
+  'glow': 0 0 6px rgba(255, 255, 255, 0.6),
 
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
+  // A very delicate letterpress effect, almost imperceptible.
+  'letterpress': (0 1px 0px rgba(255,255,255,0.4), 0 1px 1px rgba(0,0,0,0.15)),
+  
+  // A much softer engraved look with less depth.
+  'engraved': (1px 1px 1px rgba(0,0,0,0.15), -1px -1px 1px rgba(255,255,255,0.5)),
+  
+  // A very gentle highlight, like a faint sheen of light.
+  'highlight': 0 1px 3px rgba(255, 255, 255, 0.3),
+
+  // Softer glow with less blur and opacity.
+  'white': 0 0 1px rgb(126, 123, 123),
+);
+
+// Generate all light effect classes
+@each $name, $value in $soft-light-text-effects {
+  .text-shadowl--#{$name} {
+    text-shadow: $value;
   }
-
-  50% {
-    opacity: 0.8;
-    transform: scale(1.05);
-  }
-}
-
-.animate-pulse-slow {
-  animation: pulse-slow 4s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-.shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite linear;
-}
-
-// Backgrounds
-.bg-deep-space {
-  background-color: v.$deep-space !important;
-}
-
-.bg-slate-50 {
-  background-color: map.get(map.get(v.$colors, 'neutral'), 'light') !important;
 }

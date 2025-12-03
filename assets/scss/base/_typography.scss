@@ -1,87 +1,138 @@
 @use 'sass:map';
 @use '../abstracts/variables' as v;
 @use '../abstracts/mixins' as mix;
+@use 'sass:color';
 
 /* ==========================================================================
    TYPOGRAPHY
    ========================================================================== */
 
-// Import Google Fonts (You should add the <link> in HTML, but here is the CSS reference)
-// Space Grotesk (Display) & Inter (Body)
+/* Font face declarations for locally hosted Poppins font */
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fonts/Poppins/Poppins-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fonts/Poppins/Poppins-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fonts/Poppins/Poppins-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Font face declarations for locally hosted Inter font - Optimized version */
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/Inter/static/Inter_18pt-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/Inter/static/Inter_18pt-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/Inter/static/Inter_18pt-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/Inter/static/Inter_18pt-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Base typography */
 body {
-  font-family: v.$font-family-sans;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: map.get(v.$font-weights, 'regular');
   font-size: map.get(v.$font-sizes, 'base');
   line-height: 1.6;
-  color: var(--text-color);
-  background-color: var(--bg-color);
 }
 
-/* Headings - Space Grotesk */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.font-display {
-  font-family: v.$font-family-heading;
-  color: var(--text-color);
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: map.get(v.$font-weights, 'bold');
+  color: v.$white;
   margin-bottom: map.get(v.$spacers, 3);
   line-height: 1.2;
 }
 
 h1 {
-  font-weight: map.get(v.$font-weights, 'bold');
-  font-size: map.get(v.$font-sizes, '4xl');
+  font-size: map.get(v.$font-sizes, '2xl');
 
   @include mix.respond-to-min('md') {
-    font-size: map.get(v.$font-sizes, '5xl');
+    font-size: map.get(v.$font-sizes, '3xl');
   }
 }
 
 h2 {
-  font-weight: map.get(v.$font-weights, 'bold');
   font-size: map.get(v.$font-sizes, '3xl');
 
-  @include mix.respond-to-min('md') {
-    font-size: map.get(v.$font-sizes, '4xl');
+  @include mix.respond-to-max('sm') {
+    font-size: map.get(v.$font-sizes, 'lg');
   }
 }
 
 h3 {
-  font-weight: map.get(v.$font-weights, 'bold'); // Or medium depending on preference
   font-size: map.get(v.$font-sizes, '2xl');
+  font-weight: map.get(v.$font-weights, 'semibold');
 }
 
 h4 {
-  font-weight: map.get(v.$font-weights, 'medium');
   font-size: map.get(v.$font-sizes, 'xl');
+  font-weight: map.get(v.$font-weights, 'semibold');
 }
 
 h5 {
-  font-weight: map.get(v.$font-weights, 'medium');
   font-size: map.get(v.$font-sizes, 'lg');
+  font-weight: map.get(v.$font-weights, 'medium');
 }
 
 h6 {
-  font-weight: map.get(v.$font-weights, 'medium');
   font-size: map.get(v.$font-sizes, 'base');
+  font-weight: map.get(v.$font-weights, 'medium');
 }
 
-/* Body Text - Inter */
+/* Paragraphs */
 p {
-  font-family: v.$font-family-sans;
   margin-bottom: map.get(v.$spacers, 3);
-}
 
-.font-sans {
-  font-family: v.$font-family-sans !important;
-}
-
-.font-display {
-  font-family: v.$font-family-heading !important;
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 /* Links */
@@ -91,39 +142,344 @@ a {
   transition: v.$transition-base;
 
   &:hover {
-    color: v.$primary-light;
+    color: color.scale(v.$primary, $lightness: -10%);
   }
 }
 
-/* Text Utilities */
-.text-neon-blue {
-  color: v.$neon-blue !important;
-}
-
-.text-neon-purple {
-  color: v.$neon-purple !important;
-}
-
-.text-white {
-  color: v.$white !important;
-}
-
+/* Text utilities */
+.text-primary { color: v.$primary !important; }
 .text-gradient {
-  @include mix.text-gradient;
+  background: v.$primary-gradient;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.font-light { font-weight: map.get(v.$font-weights, 'light') !important; }
+.font-normal { font-weight: map.get(v.$font-weights, 'regular') !important; }
+.font-medium { font-weight: map.get(v.$font-weights, 'medium') !important; }
+.font-semibold { font-weight: map.get(v.$font-weights, 'semibold') !important; }
+.font-bold { font-weight: map.get(v.$font-weights, 'bold') !important; }
+.text-center { text-align: center !important; }
+.text-left { text-align: left !important; }
+.text-right { text-align: right !important; }
+
+/* Heading custom classes */
+.heading-lg {
+  font-size: map.get(v.$font-sizes, '4xl');
+  font-weight: map.get(v.$font-weights, 'bold');
+  margin-bottom: map.get(v.$spacers, 4);
+}
+.heading-md {
+  font-size: map.get(v.$font-sizes, '3xl');
+  font-weight: map.get(v.$font-weights, 'semibold');
+  margin-bottom: map.get(v.$spacers, 3);
 }
 
-.font-light {
-  font-weight: map.get(v.$font-weights, 'light') !important;
+/* Font family utilities */
+.font-heading { font-family: 'Poppins', sans-serif !important; }
+.font-body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important; }
+
+/* Font size utilities */
+.text-xs, .fs-xs { font-size: map.get(v.$font-sizes, 'xs') !important; }
+.text-sm, .fs-sm { font-size: map.get(v.$font-sizes, 'sm') !important; }
+.text-base, .fs-base { font-size: map.get(v.$font-sizes, 'base') !important; }
+.text-lg, .fs-lg { font-size: map.get(v.$font-sizes, 'lg') !important; }
+.text-xl, .fs-xl { font-size: map.get(v.$font-sizes, 'xl') !important; }
+.text-2xl, .fs-2xl { font-size: map.get(v.$font-sizes, '2xl') !important; }
+.text-3xl, .fs-3xl { font-size: map.get(v.$font-sizes, '3xl') !important; }
+.text-4xl, .fs-4xl { font-size: map.get(v.$font-sizes, '4xl') !important; }
+.text-5xl, .fs-5xl { font-size: map.get(v.$font-sizes, '5xl') !important; }
+.text-6xl, .fs-6xl { font-size: map.get(v.$font-sizes, '6xl') !important; }
+
+/* Responsive Font Sizes */
+.text-responsive-sm {
+  font-size: map.get(v.$font-sizes, 'sm');
+  @include mix.respond-to-min('md') { font-size: map.get(v.$font-sizes, 'base'); }
+  @include mix.respond-to-min('lg') { font-size: map.get(v.$font-sizes, 'lg'); }
+}
+.text-responsive-base {
+  font-size: map.get(v.$font-sizes, 'base');
+  @include mix.respond-to-min('md') { font-size: map.get(v.$font-sizes, 'lg'); }
+  @include mix.respond-to-min('lg') { font-size: map.get(v.$font-sizes, 'xl'); }
+}
+.text-responsive-lg {
+  font-size: map.get(v.$font-sizes, 'lg');
+  @include mix.respond-to-min('md') { font-size: map.get(v.$font-sizes, '2xl'); }
+  @include mix.respond-to-min('lg') { font-size: map.get(v.$font-sizes, '3xl'); }
+}
+.text-responsive-xl {
+  font-size: map.get(v.$font-sizes, '2xl');
+  @include mix.respond-to-min('md') { font-size: map.get(v.$font-sizes, '3xl'); }
+  @include mix.respond-to-min('lg') { font-size: map.get(v.$font-sizes, '4xl'); }
 }
 
-.font-regular {
-  font-weight: map.get(v.$font-weights, 'regular') !important;
+/* Font weight utilities */
+.font-light, .fw-light { font-weight: map.get(v.$font-weights, 'light') !important; }
+.font-normal, .font-regular, .fw-normal, .fw-regular { font-weight: map.get(v.$font-weights, 'regular') !important; }
+.font-medium, .fw-medium { font-weight: map.get(v.$font-weights, 'medium') !important; }
+.font-semibold, .fw-semibold { font-weight: map.get(v.$font-weights, 'semibold') !important; }
+.font-bold, .fw-bold { font-weight: map.get(v.$font-weights, 'bold') !important; }
+
+/* Responsive Text Alignment */
+.text-sm-left { @include mix.respond-to-min('sm') { text-align: left !important; } }
+.text-sm-center { @include mix.respond-to-min('sm') { text-align: center !important; } }
+.text-md-left { @include mix.respond-to-min('md') { text-align: left !important; } }
+.text-md-center { @include mix.respond-to-min('md') { text-align: center !important; } }
+
+/* ==========================================================================
+   TEXT COLORS
+   ========================================================================== */
+
+.text-primary-light { color: v.$primary-light !important; }
+.text-primary-dark { color: v.$primary-dark !important; }
+.text-accent { color: v.$accent !important; }
+.text-white { color: v.$white !important; }
+.text-black { color: v.$black !important; }
+.text-gray { color: v.$gray !important; }
+.text-dark-gray { color: v.$dark-gray !important; }
+.text-light-gray { color: v.$light-gray !important; }
+.text-deep-blue { color: v.$deep-blue !important; }
+
+.text-theme-primary { color: v.$black !important; }
+.text-theme-secondary { color: #4b5563 !important; }
+.text-theme-muted { color: #9ca3af !important; }
+
+.text-neon { color: v.$neon-cyan !important; }
+.text-electric { color: v.$electric-blue !important; }
+.text-glow { color: v.$glow-blue !important; }
+
+/* ==========================================================================
+   TEXT TRANSFORM
+   ========================================================================== */
+
+.text-uppercase { text-transform: uppercase !important; }
+.text-lowercase { text-transform: lowercase !important; }
+.text-capitalize { text-transform: capitalize !important; }
+.text-normal-case { text-transform: none !important; }
+
+/* ==========================================================================
+   TEXT DECORATION
+   ========================================================================== */
+
+.text-underline { text-decoration: underline !important; }
+.text-line-through { text-decoration: line-through !important; }
+.text-no-underline { text-decoration: none !important; }
+
+/* ==========================================================================
+   LINE HEIGHT
+   ========================================================================== */
+
+.leading-none { line-height: 1 !important; }
+.leading-tight { line-height: 1.2 !important; }
+.leading-snug { line-height: 1.375 !important; }
+.leading-normal { line-height: 1.5 !important; }
+.leading-relaxed { line-height: 1.625 !important; }
+.leading-loose { line-height: 2 !important; }
+
+/* ==========================================================================
+   LETTER SPACING
+   ========================================================================== */
+
+.tracking-tighter { letter-spacing: -0.05em !important; }
+.tracking-tight { letter-spacing: -0.025em !important; }
+.tracking-normal { letter-spacing: 0 !important; }
+.tracking-wide { letter-spacing: 0.025em !important; }
+.tracking-wider { letter-spacing: 0.05em !important; }
+.tracking-widest { letter-spacing: 0.1em !important; }
+
+/* ==========================================================================
+   TEXT OVERFLOW
+   ========================================================================== */
+
+.text-truncate, .truncate {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+.text-ellipsis { text-overflow: ellipsis !important; }
+.text-clip { text-overflow: clip !important; }
+
+.text-truncate-2 {
+  display: -webkit-box !important;
+  line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+.text-truncate-3 {
+  display: -webkit-box !important;
+  line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+.text-truncate-4 {
+  display: -webkit-box !important;
+  line-clamp: 4 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
 }
 
-.font-medium {
-  font-weight: map.get(v.$font-weights, 'medium') !important;
+/* ==========================================================================
+   WHITE SPACE
+   ========================================================================== */
+
+.whitespace-normal { white-space: normal !important; }
+.whitespace-nowrap { white-space: nowrap !important; }
+.whitespace-pre { white-space: pre !important; }
+.whitespace-pre-line { white-space: pre-line !important; }
+.whitespace-pre-wrap { white-space: pre-wrap !important; }
+
+/* ==========================================================================
+   WORD BREAK
+   ========================================================================== */
+
+.break-normal { word-break: normal !important; overflow-wrap: normal !important; }
+.break-words { overflow-wrap: break-word !important; }
+.break-all { word-break: break-all !important; }
+
+/* ==========================================================================
+   HEADING PRESETS
+   ========================================================================== */
+
+.heading-display {
+  font-family: 'Poppins', sans-serif;
+  font-size: map.get(v.$font-sizes, '5xl');
+  font-weight: map.get(v.$font-weights, 'bold');
+  line-height: 1.1;
+  color: v.$black;
+  margin-bottom: map.get(v.$spacers, 4);
+  @include mix.respond-to-min('md') { font-size: map.get(v.$font-sizes, '6xl'); }
+}
+.heading-hero {
+  font-family: 'Poppins', sans-serif;
+  font-size: map.get(v.$font-sizes, '4xl');
+  font-weight: map.get(v.$font-weights, 'bold');
+  line-height: 1.1;
+  color: v.$black;
+  margin-bottom: map.get(v.$spacers, 4);
+  @include mix.respond-to-min('md') { font-size: map.get(v.$font-sizes, '5xl'); }
+}
+.heading-section {
+  font-family: 'Poppins', sans-serif;
+  font-size: map.get(v.$font-sizes, '3xl');
+  font-weight: map.get(v.$font-weights, 'bold');
+  line-height: 1.2;
+  color: v.$black;
+  margin-bottom: map.get(v.$spacers, 3);
+}
+.heading-subsection {
+  font-family: 'Poppins', sans-serif;
+  font-size: map.get(v.$font-sizes, '2xl');
+  font-weight: map.get(v.$font-weights, 'semibold');
+  line-height: 1.3;
+  color: v.$black;
+  margin-bottom: map.get(v.$spacers, 3);
+}
+.heading-card {
+  font-family: 'Poppins', sans-serif;
+  font-size: map.get(v.$font-sizes, 'xl');
+  font-weight: map.get(v.$font-weights, 'semibold');
+  line-height: 1.4;
+  color: v.$black;
+  margin-bottom: map.get(v.$spacers, 2);
 }
 
-.font-bold {
-  font-weight: map.get(v.$font-weights, 'bold') !important;
+/* ==========================================================================
+   TEXT PRESETS
+   ========================================================================== */
+
+.text-lead {
+  font-size: map.get(v.$font-sizes, 'lg');
+  font-weight: map.get(v.$font-weights, 'regular');
+  line-height: 1.75;
+  color: #4b5563;
 }
+.text-body {
+  font-size: map.get(v.$font-sizes, 'base');
+  font-weight: map.get(v.$font-weights, 'regular');
+  line-height: 1.6;
+  color: #4b5563;
+}
+.text-small {
+  font-size: map.get(v.$font-sizes, 'sm');
+  font-weight: map.get(v.$font-weights, 'regular');
+  line-height: 1.5;
+  color: #4b5563;
+}
+.text-caption {
+  font-size: map.get(v.$font-sizes, 'xs');
+  font-weight: map.get(v.$font-weights, 'regular');
+  line-height: 1.4;
+  color: #9ca3af;
+}
+.text-label {
+  font-size: map.get(v.$font-sizes, 'sm');
+  font-weight: map.get(v.$font-weights, 'medium');
+  line-height: 1.4;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+.text-code {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.875em;
+  padding: 0.125rem 0.375rem;
+  background-color: rgba(v.$primary, 0.1);
+  border-radius: 0.25rem;
+}
+.text-quote {
+  font-size: map.get(v.$font-sizes, 'lg');
+  font-style: italic;
+  line-height: 1.75;
+  color: #4b5563;
+  border-left: 4px solid v.$primary;
+  padding-left: map.get(v.$spacers, 3);
+}
+
+/* ==========================================================================
+   SPECIAL EFFECTS
+   ========================================================================== */
+
+.text-shadow-sm { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
+.text-shadow { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); }
+.text-shadow-lg { text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); }
+.text-glow-blue {
+  text-shadow: 0 0 10px rgba(v.$primary, 0.5),
+               0 0 20px rgba(v.$primary, 0.3),
+               0 0 30px rgba(v.$primary, 0.1);
+}
+.text-glow-neon {
+  text-shadow: 0 0 10px rgba(v.$neon-cyan, 0.8),
+               0 0 20px rgba(v.$neon-cyan, 0.5),
+               0 0 30px rgba(v.$neon-cyan, 0.3);
+}
+
+/* ==========================================================================
+   UTILITY COMBINATIONS
+   ========================================================================== */
+
+.subtitle {
+  font-size: map.get(v.$font-sizes, 'lg');
+  color: v.$gray;
+  margin-bottom: map.get(v.$spacers, 4);
+  line-height: 1.6;
+}
+.overline {
+  font-weight: map.get(v.$font-weights, 'semibold');
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: map.get(v.$spacers, 2);
+}
+.eyebrow {
+  font-size: map.get(v.$font-sizes, 'sm');
+  font-weight: map.get(v.$font-weights, 'semibold');
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: v.$primary;
+  margin-bottom: map.get(v.$spacers, 2);
+}
+
+/* ==========================================================================
+   SELECTION STYLING
+   ========================================================================== */
+
+::selection { background-color: v.$primary; color: v.$white; }
+::-moz-selection { background-color: v.$primary; color: v.$white; }

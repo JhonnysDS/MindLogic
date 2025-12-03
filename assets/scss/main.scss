@@ -1,0 +1,19 @@
+/*
+ * ITSolutions - HTML Template
+ * Main SCSS file
+ */
+
+// Sass Modules
+@use 'sass:math';
+@use 'sass:map';
+@use 'sass:color';
+
+// Abstracts - manteniendo los namespaces actuales
+@use 'abstracts/variables' as v;
+@use 'abstracts/mixins' as mix;
+
+// Base, Components, Layout y Pages - usando índices
+@use 'base';
+@use 'components';
+@use 'layout';
+@use 'pages';
