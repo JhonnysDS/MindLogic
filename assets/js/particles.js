@@ -11,7 +11,7 @@ class ParticlesNetwork {
     this.particles = [];
     this.animationId = null;
     this.isRunning = false;
-    
+
     // Configuration - Optimized for performance
     this.config = {
       particleCount: options.particleCount || 50,  // Reduced from 80
@@ -26,7 +26,7 @@ class ParticlesNetwork {
 
     this.init();
   }
-  
+
   destroy() {
     this.isRunning = false;
     if (this.animationId) {
@@ -39,7 +39,7 @@ class ParticlesNetwork {
     this.setCanvasSize();
     this.createParticles();
     this.start();
-    
+
     // Resize handler with debounce
     let resizeTimeout;
     window.addEventListener('resize', () => {
@@ -83,17 +83,17 @@ class ParticlesNetwork {
   drawLines() {
     // Limit iterations for performance
     const particleCount = this.particles.length;
-    
+
     for (let i = 0; i < particleCount; i++) {
       let connectionCount = 0;
-      
+
       // Only check next 15 particles instead of all
       const maxCheck = Math.min(i + 15, particleCount);
-      
+
       for (let j = i + 1; j < maxCheck; j++) {
         // Stop if max connections reached
         if (connectionCount >= this.config.maxConnections) break;
-        
+
         const dx = this.particles[i].x - this.particles[j].x;
         const dy = this.particles[i].y - this.particles[j].y;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -116,7 +116,7 @@ class ParticlesNetwork {
           // Animate opacity
           const currentOpacity = this.particles[i].connectionOpacity[connectionKey];
           const target = this.particles[i].connectionTarget || 0;
-          
+
           if (Math.abs(currentOpacity - target) > 0.01) {
             if (currentOpacity < target) {
               this.particles[i].connectionOpacity[connectionKey] = Math.min(
@@ -132,18 +132,18 @@ class ParticlesNetwork {
           }
 
           const animatedOpacity = this.particles[i].connectionOpacity[connectionKey];
-          
+
           if (animatedOpacity > 0.01) {
             const baseOpacity = (1 - distance / this.config.lineDistance) * 0.5;
             const finalOpacity = baseOpacity * animatedOpacity;
-            
+
             this.ctx.beginPath();
             this.ctx.strokeStyle = `rgba(${this.config.lineColor}, ${finalOpacity})`;
             this.ctx.lineWidth = this.config.lineWidth;
             this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
             this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
             this.ctx.stroke();
-            
+
             connectionCount++;
           }
         } else {
@@ -173,19 +173,19 @@ class ParticlesNetwork {
 
   animate() {
     if (!this.isRunning) return;
-    
+
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.drawLines();
     this.drawParticles();
     this.updateParticles();
     this.animationId = requestAnimationFrame(() => this.animate());
   }
-  
+
   start() {
     this.isRunning = true;
     this.animate();
   }
-  
+
   stop() {
     this.isRunning = false;
     if (this.animationId) {
@@ -201,24 +201,25 @@ let particlesInstance = null;
 function initParticles() {
   const canvas = document.getElementById('particles-canvas');
   if (!canvas) return;
-  
+
   const isDarkMode = document.body.classList.contains('dark-mode');
-  
+
   // Destroy previous instance if exists
   if (particlesInstance) {
     particlesInstance.destroy();
   }
-  
+
   // Optimized settings for better performance
   particlesInstance = new ParticlesNetwork('particles-canvas', {
-    particleCount: 45,  // Reduced from 80
-    particleColor: isDarkMode ? '0, 243, 255' : '100, 116, 139',
-    lineColor: isDarkMode ? '0, 243, 255' : '148, 163, 184',
-    particleRadius: 2,
-    particleSpeed: 0.25,  // Slower
-    lineDistance: 120,  // Shorter distance
-    lineWidth: 0.6,  // Thinner
-    maxConnections: 3,  // Max 3 connections per particle
+    particleCount: 50,  // Slightly increased
+    // Darker colors for light mode visibility (Slate 800/900)
+    particleColor: isDarkMode ? '0, 243, 255' : '15, 23, 42',
+    lineColor: isDarkMode ? '0, 243, 255' : '30, 41, 59',
+    particleRadius: 3.5, // Larger (was 2)
+    particleSpeed: 0.8,  // Faster (was 0.25)
+    lineDistance: 160,  // Longer connection distance (was 120)
+    lineWidth: 0.8,  // Slightly thicker
+    maxConnections: 5,  // More connections (was 3)
   });
 }
 
@@ -226,7 +227,7 @@ function initParticles() {
 document.addEventListener('DOMContentLoaded', () => {
   // Wait a bit for theme to be applied
   setTimeout(initParticles, 50);
-  
+
   // Pause animation when tab is not visible (save CPU)
   document.addEventListener('visibilitychange', () => {
     if (particlesInstance) {

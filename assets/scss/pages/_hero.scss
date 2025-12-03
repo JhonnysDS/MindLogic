@@ -35,7 +35,7 @@
   height: 100%;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.3;
+  opacity: 0.6; // Increased from 0.3 for better visibility
   transition: opacity 0.3s ease;
 
   @include mix.dark-mode {
@@ -43,7 +43,7 @@
   }
 
   @include mix.respond-to-max('md-c') {
-    opacity: 0.2;
+    opacity: 0.5; // Increased from 0.2
   }
 }
 
@@ -80,9 +80,9 @@
   font-weight: map.get(v.$font-weights, 'bold');
   line-height: 1.2;
   margin-bottom: map.get(v.$spacers, 3);
-  color: #1e293b;  // Slate 800 - More visible in light mode
+  color: #1e293b; // Slate 800 - More visible in light mode
   transition: color 0.3s ease;
-  
+
   @include mix.dark-mode {
     color: v.$white;
   }
@@ -98,16 +98,22 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  color: transparent;  // Fallback
+
+  .dud {
+    color: v.$neon-blue;
+    opacity: 0.7;
+  }
+
+  color: transparent; // Fallback
 }
 
 .hero-description {
   font-size: map.get(v.$font-sizes, 'lg');
   line-height: 1.6;
   margin-bottom: map.get(v.$spacers, 5);
-  color: #64748b;  // Slate 500 - Better visibility in light mode
+  color: #64748b; // Slate 500 - Better visibility in light mode
   transition: color 0.3s ease;
-  
+
   @include mix.dark-mode {
     color: #9ca3af;
   }
@@ -133,6 +139,46 @@
 
   @include mix.respond-to-max('md-c') {
     justify-content: center;
+  }
+
+  // Override for hero buttons in Light Mode (User Request)
+  .btn {
+    // Apply .btn-cta colors (Light Mode)
+    background-color: v.$black;
+    color: v.$white !important;
+    border-color: v.$black;
+
+    &:hover {
+      background-color: v.$neon-blue;
+      color: v.$black !important;
+      border-color: v.$neon-blue;
+      box-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+    }
+
+    // Restore Dark Mode styles
+    @include mix.dark-mode {
+      &.btn-primary {
+        background-color: v.$neon-blue;
+        border-color: v.$neon-blue;
+        color: v.$white !important;
+
+        &:hover {
+          background-color: v.$primary-light;
+          border-color: v.$primary-light;
+        }
+      }
+
+      &.btn-outline {
+        background-color: transparent;
+        border-color: v.$neon-blue;
+        color: v.$neon-blue !important;
+
+        &:hover {
+          background-color: v.$neon-blue;
+          color: v.$white !important;
+        }
+      }
+    }
   }
 }
 
@@ -184,7 +230,7 @@
   animation: pulse-glow 4s ease-in-out infinite;
   pointer-events: none;
   transition: background 0.3s ease;
-  
+
   @include mix.dark-mode {
     background: radial-gradient(circle, rgba(0, 243, 255, 0.3) 0%, rgba(189, 0, 255, 0.1) 50%, transparent 70%);
   }
@@ -193,20 +239,41 @@
 // ==========================================================================
 // ANIMATIONS
 // ==========================================================================
+@keyframes glow-pulse {
+  0% {
+    filter: drop-shadow(0 0 0px rgba(0, 243, 255, 0));
+  }
+  
+  50% {
+    filter: drop-shadow(0 0 20px rgba(0, 243, 255, 0.8))
+            drop-shadow(0 0 30px rgba(189, 0, 255, 0.6));
+  }
+  
+  100% {
+    filter: drop-shadow(0 0 0px rgba(0, 243, 255, 0));
+  }
+}
+
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-20px);
   }
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.5;
     transform: translate(-50%, -50%) scale(1);
   }
+
   50% {
     opacity: 0.8;
     transform: translate(-50%, -50%) scale(1.1);
@@ -214,11 +281,66 @@
 }
 
 @keyframes pulse-bg {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.5;
   }
 }
 
+// Canvas Disintegration Effect
+.disintegration-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5; // Ensure particles are visible
+}
+
+.hero-subtitle-wrapper {
+  position: relative;
+  height: clamp(2.6rem, 5.2vw, 3.4rem); // Fixed height to prevent layout shift
+  margin-bottom: map.get(v.$spacers, 4);
+  display: flex;
+  align-items: center; // Center text vertically
+  overflow: visible; // Allow particles to be visible
+  white-space: nowrap; // Keep text in one line
+  width: 100%; // Full width
+
+  // Text Styling
+  font-family: v.$font-family-heading;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: map.get(v.$font-weights, 'semibold');
+  line-height: 1.3;
+  background: linear-gradient(135deg, v.$neon-blue 0%, v.$neon-purple 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+
+  // Animation State - Initial hidden state
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  filter: blur(5px);
+  transition: opacity 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+              transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+              filter 0.4s ease-out;
+
+  &.text-appear {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+    animation: glow-pulse 0.6s ease-out;
+  }
+}
+
+.fading-char {
+  transition: opacity 0.7s ease-out;
+  display: inline-block;
+}
