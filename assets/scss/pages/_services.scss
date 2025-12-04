@@ -1,0 +1,298 @@
+// ==========================================================================
+// SERVICES SECTION - Home Page
+// ==========================================================================
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as mix;
+@use 'sass:map';
+
+.services-section {
+  padding: map.get(v.$spacers, 9) map.get(v.$spacers, 4);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  @include mix.transition(v.$transition-smooth);
+
+  @include mix.dark-mode {
+    background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+  }
+
+  @include mix.respond-to-max('md') {
+    padding: map.get(v.$spacers, 7) map.get(v.$spacers, 3);
+  }
+
+  // Decorative background elements
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  &::before {
+    top: 0;
+    right: 0;
+    width: 500px;
+    height: 500px;
+    background: rgba(0, 243, 255, 0.05);
+
+    @include mix.dark-mode {
+      background: rgba(0, 243, 255, 0.08);
+    }
+  }
+
+  &::after {
+    bottom: 0;
+    left: 0;
+    width: 500px;
+    height: 500px;
+    background: rgba(189, 0, 255, 0.05);
+
+    @include mix.dark-mode {
+      background: rgba(189, 0, 255, 0.08);
+    }
+  }
+}
+
+// Services Container
+.services-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+// Services Header
+.services-header {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto map.get(v.$spacers, 8);
+
+  @include mix.respond-to-max('md') {
+    margin-bottom: map.get(v.$spacers, 6);
+  }
+}
+
+.services-title {
+  font-family: v.$font-family-heading;
+  font-size: map.get(v.$font-sizes, '4xl');
+  font-weight: map.get(v.$font-weights, 'bold');
+  margin-bottom: map.get(v.$spacers, 4);
+  color: var(--color-text-primary);
+  line-height: 1.2;
+
+  @include mix.respond-to-min('md') {
+    font-size: map.get(v.$font-sizes, '5xl');
+  }
+
+  .gradient-text {
+    background: linear-gradient(to right, #00b4d8, #7209b7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    @include mix.dark-mode {
+      background: linear-gradient(to right, #00f3ff, #bd00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+}
+
+.services-description {
+  font-size: map.get(v.$font-sizes, 'lg');
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+
+  @include mix.respond-to-max('md') {
+    font-size: map.get(v.$font-sizes, 'base');
+  }
+}
+
+// Services Grid
+.services-grid {
+  @include mix.grid(1, map.get(v.$spacers, 4));
+
+  @include mix.respond-to-min('md') {
+    @include mix.grid(2, map.get(v.$spacers, 4));
+  }
+
+  @include mix.respond-to-min('lg') {
+    @include mix.grid(3, map.get(v.$spacers, 4));
+  }
+}
+
+// Service Card
+.service-card {
+  position: relative;
+  padding: map.get(v.$spacers, 5);
+  @include mix.border-radius(v.$border-radius-xl);
+  overflow: hidden;
+  cursor: pointer;
+  @include mix.transition(all 0.3s ease);
+
+  // Glassmorphism effect
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  @include mix.box-shadow(0 10px 15px -3px rgba(0, 0, 0, 0.1));
+
+  @include mix.dark-mode {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: none;
+  }
+
+  &:hover {
+    border-color: rgba(0, 243, 255, 0.3); // hover:border-neon-blue/30
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); // hover:shadow-2xl en Tailwind
+
+    @include mix.dark-mode {
+      background: rgba(255, 255, 255, 0.05); // dark:hover:bg-white/5
+      border-color: rgba(0, 243, 255, 0.3);
+    }
+
+    .service-card-bg-icon {
+      opacity: 0.1; // group-hover:opacity-10
+
+      @include mix.dark-mode {
+        opacity: 0.1; // Mismo valor que en light mode según el código de referencia
+      }
+    }
+
+    .service-icon-box {
+      @include mix.transform(scale(1.1));
+    }
+
+    .service-title {
+      color: v.$neon-blue;
+    }
+
+    .service-link i,
+    .service-link svg {
+      @include mix.transform(translateX(4px)); // group-hover:translate-x-1 (0.25rem = 4px)
+    }
+  }
+
+  // Background decorative icon (Watermark)
+  .service-card-bg-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1rem; // p-4 en Tailwind
+    opacity: 0;
+    transition: opacity 0.5s ease; // duration-500
+    pointer-events: none;
+    z-index: 1;
+
+    // Aplicar estilos tanto al <i> como al <svg> generado por Lucide
+    i,
+    svg {
+      display: block;
+      width: 180px; // Más grande - aumentado de 128px a 180px
+      height: 180px; // Más grande - aumentado de 128px a 180px
+      color: #0f172a; // text-slate-900 en light mode
+      stroke: currentColor; // Para que Lucide use el color
+      transform: rotate(-15deg) translateX(40px) translateY(-40px); // Rotación horizontal más pronunciada
+
+      @include mix.dark-mode {
+        color: v.$neon-blue; // dark:text-neon-blue
+      }
+    }
+  }
+}
+
+// Service Card Content
+.service-card-content {
+  position: relative;
+  z-index: 10;
+}
+
+// Service Icon Box
+.service-icon-box {
+  width: 56px;
+  height: 56px;
+  @include mix.border-radius(v.$border-radius-lg);
+  @include mix.flex(row, center, center);
+  margin-bottom: map.get(v.$spacers, 4);
+  @include mix.transition(transform 0.3s ease);
+  background: linear-gradient(135deg, rgba(0, 243, 255, 0.1) 0%, rgba(189, 0, 255, 0.1) 100%);
+  border: 1px solid rgba(0, 243, 255, 0.2);
+
+  @include mix.dark-mode {
+    background: linear-gradient(135deg, rgba(0, 243, 255, 0.2) 0%, rgba(189, 0, 255, 0.2) 100%);
+  }
+
+  i {
+    width: 28px;
+    height: 28px;
+    color: v.$neon-blue;
+  }
+}
+
+// Service Title
+.service-title {
+  font-family: v.$font-family-heading;
+  font-size: map.get(v.$font-sizes, 'xl');
+  font-weight: map.get(v.$font-weights, 'bold');
+  color: var(--color-text-primary);
+  margin-bottom: map.get(v.$spacers, 3);
+  @include mix.transition(color 0.3s ease);
+}
+
+// Service Description
+.service-description {
+  font-size: map.get(v.$font-sizes, 'sm');
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  margin-bottom: map.get(v.$spacers, 4);
+}
+
+// Service Link
+.service-link {
+  @include mix.inline-flex(row, flex-start, center);
+  font-size: map.get(v.$font-sizes, 'xs');
+  font-weight: map.get(v.$font-weights, 'bold');
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  @include mix.transition(color 0.3s ease);
+
+  &:hover {
+    color: v.$neon-blue;
+  }
+
+  // Aplicar a <i> y <svg> generado por Lucide
+  i,
+  svg {
+    width: 16px;
+    height: 16px;
+    margin-left: map.get(v.$spacers, 2);
+    stroke: currentColor;
+    @include mix.transition(transform 0.3s ease);
+  }
+}
+
+// Reveal animation
+.reveal {
+  opacity: 0;
+  @include mix.transform(translateY(30px));
+  @include mix.transition(all 0.8s cubic-bezier(0.5, 0, 0, 1));
+
+  &.active {
+    opacity: 1;
+    @include mix.transform(translateY(0));
+  }
+}
+
+// Staggered delays for cards
+@for $i from 1 through 6 {
+  .reveal:nth-child(#{$i}) {
+    transition-delay: #{($i - 1) * 100}ms;
+  }
+}
