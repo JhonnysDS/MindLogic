@@ -185,10 +185,11 @@
 
   // Variantes opcionales si se necesitan colores específicos
   &.btn-x {
-    background-color: rgba(0, 0, 0, 0.1);
+    // Use same background as other social buttons for consistency
+    background-color: rgba(var(--color-neon-blue-rgb, 0, 243, 255), 0.1);
 
     svg {
-      stroke: #000000;
+      stroke: #1DA1F2; // Twitter/X blue color
       fill: none;
     }
 
@@ -203,8 +204,6 @@
     }
 
     body.dark-mode & {
-      background-color: rgba(255, 255, 255, 0.1);
-
       svg {
         stroke: #ffffff;
       }

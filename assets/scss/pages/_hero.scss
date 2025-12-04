@@ -66,10 +66,13 @@
 // HERO CONTENT (Left Side)
 // ==========================================================================
 .hero-content {
-  flex: 1;
+  flex: 0 0 auto; // Don't grow or shrink
+  width: 50%; // Fixed width to match hero-image
   max-width: 600px;
+  min-width: 0; // Allow content to shrink
 
   @include mix.respond-to-max('md-c') {
+    width: 100%;
     max-width: 100%;
   }
 }
@@ -186,7 +189,8 @@
 // HERO IMAGE (Right Side)
 // ==========================================================================
 .hero-image {
-  flex: 1;
+  flex: 0 0 auto; // Don't grow or shrink
+  width: 50%; // Fixed width
   position: relative;
   @include mix.flex(row, center, center);
   max-width: 750px;
@@ -311,7 +315,7 @@
   align-items: center; // Center text vertically
   overflow: visible; // Allow particles to be visible
   white-space: nowrap; // Keep text in one line
-  width: 100%; // Full width
+  max-width: 100%; // Don't exceed parent width
 
   // Text Styling
   font-family: v.$font-family-heading;
@@ -337,6 +341,10 @@
     transform: translateY(0) scale(1);
     filter: blur(0px);
     animation: glow-pulse 0.6s ease-out;
+  }
+
+  @include mix.respond-to-max('md-c') {
+    max-width: 100%;
   }
 }
 

@@ -87,8 +87,8 @@ class ParticlesNetwork {
     for (let i = 0; i < particleCount; i++) {
       let connectionCount = 0;
 
-      // Only check next 15 particles instead of all
-      const maxCheck = Math.min(i + 15, particleCount);
+      // Check more particles for connections (increased from 15 to 30)
+      const maxCheck = Math.min(i + 30, particleCount);
 
       for (let j = i + 1; j < maxCheck; j++) {
         // Stop if max connections reached
@@ -108,8 +108,8 @@ class ParticlesNetwork {
             this.particles[i].connectionSpeed = 0.02 + Math.random() * 0.03;
           }
 
-          // Randomly activate/deactivate connections (less frequently)
-          if (Math.random() < 0.005) {  // Reduced from 0.01
+          // Randomly activate/deactivate connections (more frequently)
+          if (Math.random() < 0.008) {  // Increased for more dynamic connections
             this.particles[i].connectionTarget = this.particles[i].connectionTarget === 1 ? 0 : 1;
           }
 
@@ -134,7 +134,7 @@ class ParticlesNetwork {
           const animatedOpacity = this.particles[i].connectionOpacity[connectionKey];
 
           if (animatedOpacity > 0.01) {
-            const baseOpacity = (1 - distance / this.config.lineDistance) * 0.5;
+            const baseOpacity = (1 - distance / this.config.lineDistance) * 0.7; // Increased from 0.5
             const finalOpacity = baseOpacity * animatedOpacity;
 
             this.ctx.beginPath();
@@ -211,15 +211,15 @@ function initParticles() {
 
   // Optimized settings for better performance
   particlesInstance = new ParticlesNetwork('particles-canvas', {
-    particleCount: 50,  // Slightly increased
+    particleCount: 100,  // Increased for more particles
     // Darker colors for light mode visibility (Slate 800/900)
     particleColor: isDarkMode ? '0, 243, 255' : '15, 23, 42',
     lineColor: isDarkMode ? '0, 243, 255' : '30, 41, 59',
     particleRadius: 3.5, // Larger (was 2)
     particleSpeed: 0.8,  // Faster (was 0.25)
-    lineDistance: 160,  // Longer connection distance (was 120)
-    lineWidth: 0.8,  // Slightly thicker
-    maxConnections: 5,  // More connections (was 3)
+    lineDistance: 200,  // Much longer connection distance for more connections
+    lineWidth: 1,  // Slightly thicker lines
+    maxConnections: 8,  // More connections per particle (was 5)
   });
 }
 
