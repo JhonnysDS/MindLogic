@@ -57,8 +57,9 @@
 
   @include mix.respond-to-max('md-c') {
     @include mix.flex(column, center, center);
-    gap: map.get(v.$spacers, 6);
+    gap: 0;
     text-align: center;
+    min-height: 70vh; // Ensure enough height for background brain
   }
 }
 
@@ -74,6 +75,9 @@
   @include mix.respond-to-max('md-c') {
     width: 100%;
     max-width: 100%;
+    position: relative;
+    z-index: 2; // Above the brain image
+    padding: map.get(v.$spacers, 4);
   }
 }
 
@@ -85,6 +89,11 @@
   margin-bottom: map.get(v.$spacers, 3);
   color: #1e293b; // Slate 800 - More visible in light mode
   transition: color 0.3s ease;
+
+  // Animation
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease-out 0.2s forwards;
 
   @include mix.dark-mode {
     color: v.$white;
@@ -117,6 +126,11 @@
   color: #64748b; // Slate 500 - Better visibility in light mode
   transition: color 0.3s ease;
 
+  // Animation
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease-out 0.8s forwards;
+
   @include mix.dark-mode {
     color: #9ca3af;
   }
@@ -130,6 +144,11 @@
   gap: map.get(v.$spacers, 3);
   margin-bottom: map.get(v.$spacers, 5);
 
+  // Animation
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease-out 1s forwards;
+
   @include mix.respond-to-max('md-c') {
     justify-content: center;
   }
@@ -139,6 +158,11 @@
   @include mix.flex(row, flex-start, center);
   gap: map.get(v.$spacers, 3);
   flex-wrap: wrap;
+
+  // Animation
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease-out 1.2s forwards;
 
   @include mix.respond-to-max('md-c') {
     justify-content: center;
@@ -196,10 +220,29 @@
   max-width: 750px;
   padding: map.get(v.$spacers, 6);
 
+  // Animation
+  opacity: 0;
+  transform: scale(0.8) translateX(50px);
+  animation: scaleIn 1s ease-out 0.4s forwards;
+
   @include mix.respond-to-max('md-c') {
-    max-width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important;
     width: 100%;
-    padding: map.get(v.$spacers, 4);
+    max-width: 500px;
+    padding: 0;
+    z-index: 1; // Behind content
+    pointer-events: none; // Allow clicking through the image
+    
+    // Light mode - more transparent
+    animation: fadeInMobile 1s ease-out 0.4s forwards;
+    
+    // Dark mode - slightly more visible
+    @include mix.dark-mode {
+      animation: fadeInMobileDark 1s ease-out 0.4s forwards;
+    }
   }
 }
 
@@ -243,6 +286,46 @@
 // ==========================================================================
 // ANIMATIONS
 // ==========================================================================
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInMobile {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.25; // For mobile brain background (light mode)
+  }
+}
+
+@keyframes fadeInMobileDark {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.35; // For mobile brain background (dark mode - more visible)
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+}
+
 @keyframes glow-pulse {
   0% {
     filter: drop-shadow(0 0 0px rgba(0, 243, 255, 0));
@@ -328,10 +411,16 @@
   background-clip: text;
   color: transparent;
 
-  // Animation State - Initial hidden state
-  opacity: 0;
-  transform: translateY(30px) scale(0.95);
-  filter: blur(5px);
+  // Initial load animation
+  animation: fadeInUp 0.8s ease-out 0.5s backwards;
+
+  // Animation State for text change (controlled by JS)
+  &:not(.text-appear) {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    filter: blur(5px);
+  }
+
   transition: opacity 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
               transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
               filter 0.4s ease-out;

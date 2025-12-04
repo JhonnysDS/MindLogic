@@ -211,12 +211,12 @@ function initParticles() {
 
   // Optimized settings for better performance
   particlesInstance = new ParticlesNetwork('particles-canvas', {
-    particleCount: 100,  // Increased for more particles
+    particleCount: 80,  // Increased for more particles
     // Darker colors for light mode visibility (Slate 800/900)
     particleColor: isDarkMode ? '0, 243, 255' : '15, 23, 42',
     lineColor: isDarkMode ? '0, 243, 255' : '30, 41, 59',
     particleRadius: 3.5, // Larger (was 2)
-    particleSpeed: 0.8,  // Faster (was 0.25)
+    particleSpeed: 0.8,  // Slower for more elegant movement
     lineDistance: 200,  // Much longer connection distance for more connections
     lineWidth: 1,  // Slightly thicker lines
     maxConnections: 8,  // More connections per particle (was 5)

@@ -1,0 +1,123 @@
+// ==========================================================================
+// STATS SECTION - Statistics & Metrics
+// ==========================================================================
+@use '../abstracts/variables' as v;
+@use '../abstracts/mixins' as mix;
+@use 'sass:map';
+
+.stats-section {
+  padding: map.get(v.$spacers, 5) map.get(v.$spacers, 4);
+  background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s ease;
+
+  @include mix.dark-mode {
+    background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+  }
+
+  @include mix.respond-to-max('md-c') {
+    padding: map.get(v.$spacers, 3) map.get(v.$spacers, 3);
+  }
+}
+
+.stats-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  @include mix.flex(row, space-around, center);
+  gap: map.get(v.$spacers, 6);
+  position: relative;
+  z-index: 1;
+
+  @include mix.respond-to-max('md') {
+    @include mix.flex(row, center, center);
+    flex-wrap: wrap;
+    gap: map.get(v.$spacers, 5);
+  }
+
+  @include mix.respond-to-max('sm') {
+    @include mix.flex(column, center, center);
+    gap: map.get(v.$spacers, 5);
+  }
+}
+
+.stat-item {
+  @include mix.flex(column, center, center);
+  text-align: center;
+  position: relative;
+
+  // Animation
+  opacity: 0;
+  transform: translateY(30px);
+
+  &:nth-child(1) {
+    animation: fadeInUp 0.8s ease-out 0.2s forwards;
+  }
+
+  &:nth-child(2) {
+    animation: fadeInUp 0.8s ease-out 0.4s forwards;
+  }
+
+  &:nth-child(3) {
+    animation: fadeInUp 0.8s ease-out 0.6s forwards;
+  }
+
+  &:nth-child(4) {
+    animation: fadeInUp 0.8s ease-out 0.8s forwards;
+  }
+
+  @include mix.respond-to-max('md') {
+    min-width: 200px;
+  }
+
+  @include mix.respond-to-max('sm') {
+    width: 100%;
+  }
+
+}
+
+.stat-number {
+  font-family: v.$font-family-heading;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: map.get(v.$font-weights, 'bold');
+  line-height: 1.2;
+  margin-bottom: map.get(v.$spacers, 2);
+  color: v.$white;
+  position: relative;
+
+  @include mix.respond-to-max('sm') {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+}
+
+.stat-label {
+  font-family: v.$font-family-sans;
+  font-size: map.get(v.$font-sizes, 'sm');
+  font-weight: map.get(v.$font-weights, 'medium');
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.3s ease;
+
+  .stat-item:hover & {
+    color: v.$white;
+  }
+
+  @include mix.respond-to-max('sm') {
+    font-size: map.get(v.$font-sizes, 'xs');
+    letter-spacing: 1.5px;
+  }
+}
+
+// Animation keyframe (reusing from hero if exists, or define here)
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
